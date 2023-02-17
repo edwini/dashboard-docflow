@@ -1,4 +1,12 @@
 {
   "typescript.tsdk": "node_modules/typescript/lib",
-  "typescript.enablePromptUseWorkspaceTsdk": true
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "editor.formatOnPaste": false, // required
+  "editor.formatOnType": false, // required
+  "editor.formatOnSave": true, // optional
+  "editor.formatOnSaveMode": "file", // required to format on save
+  "files.autoSave": "onFocusChange",
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "rome.rome"
+  } // optional but recommended
 }
