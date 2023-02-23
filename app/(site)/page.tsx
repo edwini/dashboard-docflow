@@ -7,8 +7,8 @@ import { signIn } from "next-auth/react"
 
 export default function Home() {
   const [error, setError] = useState("")
-  const emailRef = useRef(null)
-  const passwordRef = useRef(null)
+  const emailRef = useRef<HTMLInputElement | null>(null)
+  const passwordRef = useRef<HTMLInputElement | null>(null)
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const email = emailRef?.current?.value
@@ -18,7 +18,6 @@ export default function Home() {
       return
     }
 
-    // Success! Do something here, such as redirect to another page.
     setError("")
     await signIn("credentials", {
       username: email,
