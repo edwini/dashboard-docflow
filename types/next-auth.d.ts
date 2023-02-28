@@ -1,7 +1,7 @@
-import { UserType } from "./UserType";
+import { LoginType } from "./LoginType";
 
 declare module "next-auth" {
   type Session = {
-    user: UserType;
+    user: LoginType;
   };
 }

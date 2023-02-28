@@ -14,6 +14,7 @@ import {
   ChevronRight,
   type Icon as LucideIcon,
   Search,
+  Paperclip,
 } from "lucide-react"
 
 export type Icon = LucideIcon
@@ -32,6 +33,7 @@ export const Icons = {
   search: Search,
   chevronLeft: ChevronLeft,
   chevronRight: ChevronRight,
+  paperClip: Paperclip,
   logo: (props: LucideProps) => (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" {...props}>
       <path
