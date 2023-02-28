@@ -1,4 +1,5 @@
 import { OperationLicenseType } from "@/types/OperationLicense"
+import Link from "next/link"
 
 export function ListofOperationLicense({
   operations,
@@ -22,13 +23,16 @@ export function ListofOperationLicense({
           <th scope="col" className="px-6 py-3">
             Estado
           </th>
+          <th scope="col" className="px-6 py-3">
+            Acciones
+          </th>
         </tr>
       </thead>
       <tbody>
         {operations.map((operation: OperationLicenseType) => (
           <tr
             key={operation.id}
-            className="cursor-pointer bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+            className=" bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
           >
             <th
               scope="row"
@@ -44,6 +48,14 @@ export function ListofOperationLicense({
                 <div className="h-2.5 w-2.5 rounded-full bg-yellow-500 mr-2" />
                 {operation.status}
               </div>
+            </td>
+            <td className="px-6 py-4">
+              <Link
+                href={`/operationlicense/${operation.id}`}
+                className="hover:text-amber-600 font-semibold"
+              >
+                Ver Gestión
+              </Link>
             </td>
           </tr>
         ))}
