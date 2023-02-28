@@ -1,5 +1,8 @@
 export async function GetFetch(url: string) {
   const response = await fetch(url, { cache: "no-store" })
+  if (!response.ok) {
+    return null
+  }
   const data = await response.json()
   return data
 }

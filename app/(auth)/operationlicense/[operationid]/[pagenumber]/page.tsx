@@ -16,7 +16,9 @@ export default async function Page({
 }) {
   const { pagenumber } = params
 
-  const operations = await fetchOperationLicense(pagenumber - 1)
+  const operations = (await fetchOperationLicense(pagenumber - 1)) ?? {
+    content: [],
+  }
   return (
     <MainWrapper title="Permisos de operación">
       <div className="relative overflow-x-auto">
