@@ -2,6 +2,7 @@ import MainWrapper from "@/app/(auth)/components/MainWrapper"
 import { Icons } from "@/components/icons"
 import { Button } from "@/components/ui/button"
 import PaginationLinks from "@/components/ui/PaginationLinks"
+import { log } from "console"
 import { fetchUsers } from "../../components/fetchUsers"
 import { ListofUser } from "../../components/ListofUser"
 
@@ -19,6 +20,7 @@ export default async function Page({
   const { pagenumber } = params
 
   const users = await fetchUsers(pagenumber - 1)
+
   return (
     <MainWrapper title="Administración de usuarios">
       <div className="relative overflow-x-auto">

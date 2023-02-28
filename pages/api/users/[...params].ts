@@ -7,7 +7,7 @@ export default async function handler(
   res: NextApiResponse<[]>,
 ) {
   const { params } = _req.query || {};
-
+  console.log("Entra por API");
   const URL = URL_USERS(parseInt(params![0]), parseInt(params![1]));
   const data = await GetFetch(URL);
   res.status(200).json(data);

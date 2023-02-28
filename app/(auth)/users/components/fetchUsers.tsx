@@ -1,15 +1,17 @@
 import { GetFetch } from "@/lib/fetch"
+import { URL_OPERATION_LICENSE, URL_USERS } from "@/utils/apis"
 
 export async function fetchUsers(page: number) {
-  const limit = process.env.MAX_PAGE_SIZE
-  const data = await GetFetch(
-    `${process.env.NEXTAUTH_URL}/api/user/${page}/${limit}/`,
-  )
+  const limit = parseInt(process.env.MAX_PAGE_SIZE || "5")
+  const URL = URL_USERS(page, limit)
+  const data = await GetFetch(URL)
   if (!data) {
     return {
       content: [],
       totalPages: 1,
     }
   }
+  console.log(data)
+
   return data
 }
