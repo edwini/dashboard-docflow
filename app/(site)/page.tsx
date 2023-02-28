@@ -4,9 +4,12 @@ import Image from "next/image"
 import logoMuni from "@/public/assets/images/logo_muni.png"
 import { useRef, useState } from "react"
 import { signIn } from "next-auth/react"
+import { useRouter } from "next/navigation"
 
 export default function Home() {
   const [error, setError] = useState("")
+  const router = useRouter()
+
   const emailRef = useRef<HTMLInputElement | null>(null)
   const passwordRef = useRef<HTMLInputElement | null>(null)
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -19,12 +22,19 @@ export default function Home() {
     }
 
     setError("")
-    await signIn("credentials", {
+    const login = await signIn("credentials", {
       username: email,
       password: password,
-      redirect: true,
+      redirect: false,
       callbackUrl: "/dashboard",
     })
+
+    if (!login?.ok) {
+      setError("Usuario y contraseña incorrectos")
+      return
+    }
+
+    router.push(login?.url ?? "/dashboard")
   }
 
   return (

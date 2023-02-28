@@ -1,6 +1,9 @@
 import { Icons } from "@/components/icons"
 
 export default function Sidebar() {
+  let maxPageLimit: number = parseInt(
+    process.env.MAX_PAGE_SIZE?.toString() || "5",
+  )
   return (
     <aside
       id="logo-sidebar"
@@ -22,7 +25,7 @@ export default function Sidebar() {
 
           <li>
             <a
-              href="/users"
+              href={`/users/${maxPageLimit}/1`}
               className="group flex items-center p-2 text-base font-normal  rounded-lg text-white hover:text-gray-900 hover:font-bold dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
             >
               <Icons.users className="flex-shrink-0 w-6 h-6 text-white group-hover:text-amber-600 transition duration-75 dark:text-gray-400  dark:group-hover:text-white" />
@@ -31,7 +34,7 @@ export default function Sidebar() {
           </li>
           <li>
             <a
-              href="/operationlicense"
+              href={`/operationlicense/${maxPageLimit}/1`}
               className="group flex items-center p-2 text-base font-normal  rounded-lg text-white hover:text-gray-900 hover:font-bold dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
             >
               <Icons.inbox className="flex-shrink-0 w-6 h-6 text-white group-hover:text-amber-600 transition duration-75 dark:text-gray-400 dark:group-hover:text-white" />

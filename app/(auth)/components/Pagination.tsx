@@ -92,7 +92,7 @@ const Pagination = (props: PropsPagination) => {
       <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
         Mostrando{" "}
         <span className="font-semibold text-gray-900 dark:text-white">
-          1-{totalPages}
+          {currentPage}-{totalPages}
         </span>
       </span>
       <ul className="inline-flex items-center -space-x-px">

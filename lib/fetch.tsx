@@ -1,6 +1,5 @@
 export async function GetFetch(url: string) {
-  console.log("GetFetch", url)
-  const response = await fetch(url)
+  const response = await fetch(url, { cache: "force-cache" })
   const data = await response.json()
   return data
 }

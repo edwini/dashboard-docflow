@@ -13,7 +13,6 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(credentials, req) {
         const URL = URL_AUTH_LOGIN()
-        console.log("URL", URL)
         const data = {
           username: credentials?.username,
           password: credentials?.password,
