@@ -4,10 +4,15 @@ export default function Sidebar() {
   let maxPageLimit: number = parseInt(
     process.env.MAX_PAGE_SIZE?.toString() || "5",
   )
+
+  // OPEN fixed top-0 left-0 z-40 w-64 h-screen transition-transform sm:translate-x-0 transform-none
+  //HIDE fixed top-0 left-0 z-40 w-64 h-screen transition-transform sm:translate-x-0 -translate-x-full
+  //<aside id="default-sidebar" className="fixed top-0 left-0 z-20 w-64 h-full transition-all duration-500 transform -translate-x-full bg-white shadow-lg peer-checked:translate-x-0" aria-label="Sidebar" aria-modal="true" role="dialog">
+  //<aside id="logo-sidebar" className="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-amber-600 border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700 peer-checked:translate-x-0" aria-label="Sidebar">
   return (
     <aside
       id="logo-sidebar"
-      className="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-amber-600 border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
+      className="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-amber-600 border-r border-gray-200  dark:bg-gray-800 sm:translate-x-0 dark:border-gray-700"
       aria-label="Sidebar"
     >
       <div className="h-full px-3 pb-4 overflow-y-auto bg-amber-600 dark:bg-gray-800">
