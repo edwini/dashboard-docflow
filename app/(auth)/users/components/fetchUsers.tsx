@@ -1,5 +1,5 @@
 import { GetFetch } from "@/lib/fetch"
-import { URL_OPERATION_LICENSE, URL_USERS } from "@/utils/apis"
+import { URL_USERS } from "@/utils/apis"
 
 export async function fetchUsers(page: number) {
   const limit = parseInt(process.env.MAX_PAGE_SIZE || "5")
