@@ -29,7 +29,7 @@ export function ListofOperationLicense({
         </tr>
       </thead>
       <tbody>
-        {operations.map((operation: OperationLicenseType) => (
+        {operations.map((operation: Partial<OperationLicenseType>) => (
           <tr
             key={operation.id}
             className=" bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"

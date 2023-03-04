@@ -10,11 +10,14 @@ import {
   User,
   Inbox,
   Home,
+  MoreVertical,
   ChevronLeft,
   ChevronRight,
   type Icon as LucideIcon,
   Search,
   Paperclip,
+  Pencil,
+  Trash2,
 } from "lucide-react"
 
 export type Icon = LucideIcon
@@ -34,6 +37,9 @@ export const Icons = {
   chevronLeft: ChevronLeft,
   chevronRight: ChevronRight,
   paperClip: Paperclip,
+  more: MoreVertical,
+  edit: Pencil,
+  delete: Trash2,
   logo: (props: LucideProps) => (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" {...props}>
       <path

@@ -1,16 +1,34 @@
 import { Icons } from "@/components/icons"
+import { BackButton } from "@/components/ui/BackButton"
 import MainWrapper from "../../components/MainWrapper"
-import logoMuni from "@/public/assets/images/logo_muni.png"
-
-import Image from "next/image"
-export default function Page({
+import { fetchOperationLicenseId } from "../components/fetchOperationLicense"
+import { ListOfBillboard } from "../components/ListOfBillboard"
+export default async function Page({
   params,
 }: {
   params: { operationid: number }
 }) {
   const { operationid } = params
+
+  const operationLicense = await fetchOperationLicenseId(operationid)
+
   return (
     <MainWrapper title="Detalle de licencia">
+      <div className="flex pb-4">
+        <BackButton variant="link">
+          <Icons.chevronLeft />
+          Regresar
+        </BackButton>
+
+        <span className="ml-3 hidden sm:block">
+          <button
+            type="button"
+            className="inline-flex items-center rounded-md border border-gray-300 bg-amber-600 px-4 py-2 text-sm font-medium text-white shadow-sm  hover:bg-amber-700  focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2"
+          >
+            Activar
+          </button>
+        </span>
+      </div>
       <div className="overflow-hidden bg-white shadow sm:rounded-lg">
         <div className="px-4 py-5 sm:px-6">
           <h3 className="text-base font-semibold leading-6 text-gray-900">
@@ -28,7 +46,7 @@ export default function Page({
                 No Identidad
               </dt>
               <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                0501198900221
+                {operationLicense?.identification}
               </dd>
             </div>
             <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -36,7 +54,7 @@ export default function Page({
                 Nombre de comerciante
               </dt>
               <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                Edwin Ilovares
+                {operationLicense?.commercialName}
               </dd>
             </div>
             <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -44,7 +62,7 @@ export default function Page({
                 Nombre de negocio
               </dt>
               <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                Doble J Studio
+                {operationLicense?.businessName}
               </dd>
             </div>
             <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -52,7 +70,7 @@ export default function Page({
                 Clave catastral
               </dt>
               <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                XX000X-00-0001
+                {operationLicense?.catastralId}
               </dd>
             </div>
             <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -60,13 +78,13 @@ export default function Page({
                 Representante legal
               </dt>
               <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                Edwin A. Ilovares
+                {operationLicense?.legalRepresentative}
               </dd>
             </div>
             <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
               <dt className="text-sm font-medium text-gray-500">RTN</dt>
               <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                05011989011234
+                {operationLicense?.rtn}
               </dd>
             </div>
             <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -74,7 +92,7 @@ export default function Page({
                 Dirección de negocio
               </dt>
               <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                1a. Avenida 1-1, Colonia Centro, San Pedro Sula, Cortés
+                {operationLicense?.address}
               </dd>
             </div>
             <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -82,13 +100,13 @@ export default function Page({
                 Correo electrónico
               </dt>
               <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                mail@doblejstudio.com
+                {operationLicense?.email}
               </dd>
             </div>
             <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
               <dt className="text-sm font-medium text-gray-500">Pagína web</dt>
               <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                <a href="www.google.com">www.google.com</a>
+                <a href="www.google.com">{operationLicense?.email}</a>
               </dd>
             </div>
             <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -96,7 +114,7 @@ export default function Page({
                 Telefonos de contacto
               </dt>
               <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                9999-9999 / 8888-7777
+                {operationLicense?.phone} / {operationLicense?.otherPhone}
               </dd>
             </div>
           </dl>
@@ -113,7 +131,7 @@ export default function Page({
                 Volumen de producción
               </dt>
               <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                0.00
+                {operationLicense?.production}
               </dd>
             </div>
             <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -121,7 +139,7 @@ export default function Page({
                 Volumen por servicios
               </dt>
               <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                0.00
+                {operationLicense?.services}
               </dd>
             </div>
             <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -129,7 +147,7 @@ export default function Page({
                 Volumen por ventas
               </dt>
               <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                0.00
+                {operationLicense?.sells}
               </dd>
             </div>
             <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -137,7 +155,7 @@ export default function Page({
                 Producto Controlado
               </dt>
               <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                0.00
+                {operationLicense?.controlledProduct}
               </dd>
             </div>
             <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -145,7 +163,7 @@ export default function Page({
                 Unidades billares, Maquin y otros
               </dt>
               <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                0.00
+                {operationLicense?.units}
               </dd>
             </div>
             <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -153,7 +171,7 @@ export default function Page({
                 Otros ingresos
               </dt>
               <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                0.00
+                {operationLicense?.otherFunds}
               </dd>
             </div>
           </dl>
@@ -163,128 +181,14 @@ export default function Page({
             Declaración de rotulos y vallas
           </h3>
           <p className="mt-1 max-w-2xl text-sm text-gray-500">
-            Total de rotulos declarados <span className="text-lg">3</span>
+            Total de rotulos declarados{" "}
+            <span className="text-lg">
+              {operationLicense?.billboards?.length || 0}
+            </span>
           </p>
         </div>
         <div className="border-t border-gray-200">
-          <dl>
-            <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-              <dt className="text-sm font-medium text-gray-500">
-                Tipo de rotulo
-              </dt>
-              <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                Luminoso
-              </dd>
-            </div>
-            <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-              <dt className="text-sm font-medium text-gray-500">Ubicación</dt>
-              <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                Atras de la iglesia
-              </dd>
-            </div>
-            <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-              <dt className="text-sm font-medium text-gray-500">
-                Medidas (Ancho x Alto x Largo)
-              </dt>
-              <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                2.00 x 1.00 x 0.50
-              </dd>
-            </div>
-            <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-              <dt className="text-sm font-medium text-gray-500">Tiene poste</dt>
-              <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                NO
-              </dd>
-            </div>
-            <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-              <dt className="text-sm font-medium text-gray-500">Attachments</dt>
-              <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                <ul
-                  role="list"
-                  className="divide-y divide-gray-200 rounded-md border border-gray-200"
-                >
-                  <li className="flex items-center justify-between py-3 pl-3 pr-4 text-sm">
-                    <div className="flex w-0 flex-1 items-center">
-                      <Icons.paperClip
-                        className="h-5 w-5 flex-shrink-0 text-gray-400"
-                        aria-hidden="true"
-                      />
-                      <span className="ml-2 w-0 flex-1 truncate">
-                        imagen_rotulo_1.jpg
-                      </span>
-                    </div>
-                    <div className="ml-4 flex-shrink-0">
-                      <a
-                        href="/"
-                        className="font-medium text-indigo-600 hover:text-indigo-500"
-                      >
-                        Descargar imagen
-                      </a>
-                    </div>
-                  </li>
-                </ul>
-              </dd>
-            </div>
-          </dl>
-          <dl>
-            <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-              <dt className="text-sm font-medium text-gray-500">
-                Tipo de rotulo
-              </dt>
-              <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                Luminoso
-              </dd>
-            </div>
-            <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-              <dt className="text-sm font-medium text-gray-500">Ubicación</dt>
-              <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                Atras de la iglesia
-              </dd>
-            </div>
-            <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-              <dt className="text-sm font-medium text-gray-500">
-                Medidas (Ancho x Alto x Largo)
-              </dt>
-              <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                2.00 x 1.00 x 0.50
-              </dd>
-            </div>
-            <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-              <dt className="text-sm font-medium text-gray-500">Tiene poste</dt>
-              <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                NO
-              </dd>
-            </div>
-            <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-              <dt className="text-sm font-medium text-gray-500">Attachments</dt>
-              <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                <ul
-                  role="list"
-                  className="divide-y divide-gray-200 rounded-md border border-gray-200"
-                >
-                  <li className="flex items-center justify-between py-3 pl-3 pr-4 text-sm">
-                    <div className="flex w-0 flex-1 items-center">
-                      <Icons.paperClip
-                        className="h-5 w-5 flex-shrink-0 text-gray-400"
-                        aria-hidden="true"
-                      />
-                      <span className="ml-2 w-0 flex-1 truncate">
-                        imagen_rotulo_1.jpg
-                      </span>
-                    </div>
-                    <div className="ml-4 flex-shrink-0">
-                      <a
-                        href="/"
-                        className="font-medium text-indigo-600 hover:text-indigo-500"
-                      >
-                        Descargar imagen
-                      </a>
-                    </div>
-                  </li>
-                </ul>
-              </dd>
-            </div>
-          </dl>
+          <ListOfBillboard billboards={operationLicense?.billboards || []} />
         </div>
         <div className="px-4 py-5 sm:px-6">
           <h3 className="text-base font-semibold leading-6 text-gray-900">
@@ -296,16 +200,30 @@ export default function Page({
             <div className="bg-white px-4 py-5">
               <div className="group relative">
                 <div className="relative w-full overflow-hidden rounded-lg bg-white group-hover:opacity-75 sm:aspect-w-2 sm:aspect-h-1 lg:aspect-w-1 lg:aspect-h-1">
-                  <Image
-                    src={logoMuni}
+                  <img
+                    src={operationLicense?.signature || ""}
                     className="h-full w-full object-cover object-center"
-                    alt="Logo Municipalidad de El Progreso, Yoro"
+                    alt="Firma de cliente no disponible"
                   />
                 </div>
               </div>
             </div>
           </dl>
         </div>
+      </div>
+      <div className="flex pt-4">
+        <BackButton variant="link">
+          <Icons.chevronLeft />
+          Regresar
+        </BackButton>
+        <span className="ml-3 hidden sm:block">
+          <button
+            type="button"
+            className="inline-flex items-center rounded-md border border-gray-300 bg-amber-600 px-4 py-2 text-sm font-medium text-white shadow-sm  hover:bg-amber-700  focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2"
+          >
+            Activar
+          </button>
+        </span>
       </div>
     </MainWrapper>
   )

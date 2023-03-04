@@ -12,6 +12,18 @@ export type OperationLicensePagesType = {
   empty: boolean
 }
 
+export type BillBoards = {
+  id: number
+  licenseId: number
+  type: string
+  location: string
+  weight: number
+  height: number
+  large: number
+  photo: string
+  pole: boolean
+}
+
 export type OperationLicenseType = {
   createdBy: string
   updatedBy: string | null
@@ -38,4 +50,5 @@ export type OperationLicenseType = {
   status: string
   licenseYear: number
   signature: string
+  billboards: BillBoards[]
 }

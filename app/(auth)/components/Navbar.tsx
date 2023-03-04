@@ -2,10 +2,10 @@
 import { Icons } from "@/components/icons"
 import DropDownMenuUser from "./DropDownMenuUser"
 import { SessionProvider } from "next-auth/react"
+import Image from "next/image"
+import logoMuni from "@/public/assets/images/logo_muni_mini.png"
 export default function Navbar() {
   const handleMenuToggle = () => {
-    console.log("handleMenuToggle")
-
     const sidebar = document.getElementById("logo-sidebar")
     const header = document.querySelector("header>div")
     const main = document.querySelector("main>div")
@@ -39,10 +39,10 @@ export default function Navbar() {
               <Icons.menu />
             </button>
             <a href="/dashboard" className="flex ml-2 md:mr-24">
-              <img
-                src="https://flowbite.com/docs/images/logo.svg"
+              <Image
+                src={logoMuni}
                 className="h-8 mr-3"
-                alt="FlowBite Logo"
+                alt="Logo Municipalidad de El Progreso, Yoro"
               />
               <span className="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">
                 Muni El progreso

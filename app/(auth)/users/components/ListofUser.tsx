@@ -1,5 +1,8 @@
 import { Button } from "@/components/ui/button"
 import { UserType } from "@/types/UserType"
+import Link from "next/link"
+import DropDownMenuUser from "../../components/DropDownMenuUser"
+import DropDownUserAction from "./DropDownUserAction"
 export function ListofUser({ users }: { users: UserType[] }) {
   return (
     <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -26,7 +29,7 @@ export function ListofUser({ users }: { users: UserType[] }) {
         {users.map((user: UserType) => (
           <tr
             key={user.id}
-            className="cursor-pointer bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+            className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
           >
             <th
               scope="row"
@@ -43,10 +46,7 @@ export function ListofUser({ users }: { users: UserType[] }) {
               </div>
             </td>
             <td className="px-6 py-4">
-              <Button variant={"ghost"}>Editar</Button>
-              <Button variant={"ghost"} className="text-red-700">
-                Eliminar
-              </Button>
+              <DropDownUserAction id={user.id} />
             </td>
           </tr>
         ))}
