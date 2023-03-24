@@ -1,6 +1,6 @@
 import CredentialsProvider from "next-auth/providers/credentials"
 import NextAuth, { NextAuthOptions } from "next-auth"
-import { PostFetch } from "@/lib/fetch"
+import { PostAuth } from "@/lib/fetch"
 import { URL_AUTH_LOGIN } from "@/utils/apis"
 
 export const authOptions: NextAuthOptions = {
@@ -17,10 +17,9 @@ export const authOptions: NextAuthOptions = {
           username: credentials?.username,
           password: credentials?.password,
         }
-        const user = await PostFetch(URL, data)
-
+        const user = await PostAuth(URL, data)
         // If no error and we have user data, return it
-        if (user) {
+        if (user?.messages?.successMessage) {
           return user
         }
         // Return null if user data could not be retrieved
@@ -33,6 +32,7 @@ export const authOptions: NextAuthOptions = {
   },
   pages: {
     signIn: "/",
+    error: "/auth-denied",
   },
   callbacks: {
     async jwt({ token, user }) {
@@ -40,6 +40,7 @@ export const authOptions: NextAuthOptions = {
     },
     async session({ session, token, user }) {
       session.user = token
+
       return session
     },
   },

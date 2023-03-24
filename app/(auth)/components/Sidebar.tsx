@@ -1,14 +1,73 @@
 import { Icons } from "@/components/icons"
+import { ROLES } from "@/data/data"
+import { authOptions } from "@/pages/api/auth/[...nextauth]"
+import { BLOCKED_ROUTES } from "@/utils/fomaters"
+import { getServerSession } from "next-auth"
+import Link from "next/link"
 
-export default function Sidebar() {
+export default async function Sidebar() {
   let maxPageLimit: number = parseInt(
     process.env.MAX_PAGE_SIZE?.toString() || "5",
   )
+  async function ListMenu() {
+    let menu = [
+      {
+        id: 1,
+        name: "Dashboard",
+        icon: (
+          <Icons.home className="w-6 h-6 text-white transition duration-75 dark:text-gray-400 group-hover:text-amber-600 dark:group-hover:text-white" />
+        ),
+        link: "/dashboard",
+      },
+      {
+        id: 2,
+        name: "Usuarios",
+        icon: (
+          <Icons.users className="w-6 h-6 text-white transition duration-75 dark:text-gray-400 group-hover:text-amber-600 dark:group-hover:text-white" />
+        ),
+        link: `/users/${maxPageLimit}/1`,
+      },
+      {
+        id: 3,
+        name: "Roles",
+        icon: (
+          <Icons.users className="w-6 h-6 text-white transition duration-75 dark:text-gray-400 group-hover:text-amber-600 dark:group-hover:text-white" />
+        ),
+        link: `/roles/${maxPageLimit}/1`,
+      },
+      {
+        id: 4,
+        name: "Licencias",
+        icon: (
+          <Icons.inbox className="w-6 h-6 text-white transition duration-75 dark:text-gray-400 group-hover:text-amber-600 dark:group-hover:text-white" />
+        ),
+        link: `/operationlicense/${maxPageLimit}/1`,
+      },
+    ]
+    const session = await getServerSession(authOptions)
 
-  // OPEN fixed top-0 left-0 z-40 w-64 h-screen transition-transform sm:translate-x-0 transform-none
-  //HIDE fixed top-0 left-0 z-40 w-64 h-screen transition-transform sm:translate-x-0 -translate-x-full
-  //<aside id="default-sidebar" className="fixed top-0 left-0 z-20 w-64 h-full transition-all duration-500 transform -translate-x-full bg-white shadow-lg peer-checked:translate-x-0" aria-label="Sidebar" aria-modal="true" role="dialog">
-  //<aside id="logo-sidebar" className="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-amber-600 border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700 peer-checked:translate-x-0" aria-label="Sidebar">
+    return (
+      <ul className="space-y-2">
+        {menu
+          .filter((item) => {
+            if (session?.user.content.roleId === ROLES.ADMIN) return true
+            return !BLOCKED_ROUTES.some((route) => item.link.startsWith(route))
+          })
+          .map((item, index) => (
+            <li key={item.id}>
+              <Link
+                href={item.link}
+                className="group flex items-center p-2 text-base font-normal  rounded-lg text-white hover:text-gray-900 hover:font-bold dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+              >
+                {item.icon}
+                <span className="ml-3">{item.name}</span>
+              </Link>
+            </li>
+          ))}
+      </ul>
+    )
+  }
+
   return (
     <aside
       id="logo-sidebar"
@@ -16,39 +75,9 @@ export default function Sidebar() {
       aria-label="Sidebar"
     >
       <div className="h-full px-3 pb-4 overflow-y-auto bg-amber-600 dark:bg-gray-800">
-        <ul className="space-y-2">
-          <li>
-            <a
-              href="/dashboard"
-              className="group flex items-center p-2 text-base font-normal  rounded-lg text-white hover:text-gray-900 hover:font-bold dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
-            >
-              <Icons.home className="w-6 h-6 text-white transition duration-75 dark:text-gray-400 group-hover:text-amber-600 dark:group-hover:text-white" />
-
-              <span className="ml-3">Dashboard</span>
-            </a>
-          </li>
-
-          <li>
-            <a
-              href={`/users/${maxPageLimit}/1`}
-              className="group flex items-center p-2 text-base font-normal  rounded-lg text-white hover:text-gray-900 hover:font-bold dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
-            >
-              <Icons.users className="flex-shrink-0 w-6 h-6 text-white group-hover:text-amber-600 transition duration-75 dark:text-gray-400  dark:group-hover:text-white" />
-              <span className="flex-1 ml-3 whitespace-nowrap">Users</span>
-            </a>
-          </li>
-          <li>
-            <a
-              href={`/operationlicense/${maxPageLimit}/1`}
-              className="group flex items-center p-2 text-base font-normal  rounded-lg text-white hover:text-gray-900 hover:font-bold dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
-            >
-              <Icons.inbox className="flex-shrink-0 w-6 h-6 text-white group-hover:text-amber-600 transition duration-75 dark:text-gray-400 dark:group-hover:text-white" />
-              <span className="flex-1 ml-3 whitespace-nowrap">
-                Permisos de operación
-              </span>
-            </a>
-          </li>
-        </ul>
+        {/*https://beta.nextjs.org/docs/data-fetching/fetching#asyncawait-in-server-components*/}
+        {/* @ts-expect-error Server Component */}
+        <ListMenu />
       </div>
     </aside>
   )

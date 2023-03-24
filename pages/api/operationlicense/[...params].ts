@@ -15,7 +15,6 @@ export default async function handler(
   */
   const { params } = _req.query || {};
 
-  console.log("API REQUEST ", params);
   const URL = URL_OPERATION_LICENSE(parseInt(params![0]), parseInt(params![1]));
   const data = await GetFetch(URL);
   res.status(200).json(data);

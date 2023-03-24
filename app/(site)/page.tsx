@@ -28,7 +28,6 @@ export default function Home() {
       redirect: false,
       callbackUrl: "/dashboard",
     })
-
     if (!login?.ok) {
       setError("Usuario y contraseña incorrectos")
       return
@@ -82,6 +81,9 @@ export default function Home() {
                 placeholder="Password"
               />
             </div>
+          </div>
+          <div className="flex items-center justify-between text-sm text-red-500">
+            {error}
           </div>
           <div>
             <button

@@ -1,8 +1,4 @@
-export type Message = {
-  successMessage: string | null
-  errorMessage: string | null
-  infoMessage: string | null
-}
+import { MessagesType } from "./MessagesType"
 
 export type Content = {
   id: number
@@ -11,10 +7,14 @@ export type Content = {
   phone: string
   status: string
   roleId: number
+  taxpayer: boolean
 }
 
 export type LoginType = {
-  messages: Message
+  messages: MessagesType
   content: Content
   token: string
+  iat: number
+  exp: number
+  jti: string
 }

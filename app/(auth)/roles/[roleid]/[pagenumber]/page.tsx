@@ -2,9 +2,8 @@ import MainWrapper from "@/app/(auth)/components/MainWrapper"
 import { Icons } from "@/components/icons"
 import PaginationLinks from "@/components/ui/PaginationLinks"
 import Link from "next/link"
-
-import { fetchUsers } from "../../components/fetchUsers"
-import { ListofUser } from "../../components/ListofUser"
+import { fetchRoles } from "../../components/fetchRoles"
+import { ListofRoles } from "../../components/ListofRoles"
 
 /**
  *
@@ -19,9 +18,10 @@ export default async function Page({
 }) {
   const { pagenumber } = params
 
-  const users = await fetchUsers(pagenumber - 1)
+  const roles = await fetchRoles(pagenumber - 1)
+
   return (
-    <MainWrapper title="Administración de usuarios">
+    <MainWrapper title="Administración de roles">
       <div className="relative overflow-x-auto">
         <div className="p-4 bg-white dark:bg-gray-900 lg:flex lg:items-center lg:justify-between">
           <div className="relative mt-1">
@@ -40,16 +40,16 @@ export default async function Page({
               href="/users/0?action=new"
               className="inline-flex items-center rounded-md border border-gray-300 bg-amber-600 px-4 py-2 text-sm font-medium text-white shadow-sm  hover:bg-amber-700  focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2"
             >
-              Crear nuevo usuario
+              Crear nuevo rol
             </Link>
           </div>
         </div>
-        <ListofUser users={users?.content} />
+        <ListofRoles roles={roles?.content} />
       </div>
       <PaginationLinks
-        parentPage="users"
+        parentPage="roles"
         currentPage={pagenumber}
-        totalPages={users.totalPages}
+        totalPages={roles.totalPages}
       />
     </MainWrapper>
   )

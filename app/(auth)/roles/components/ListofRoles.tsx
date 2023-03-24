@@ -1,8 +1,6 @@
-import { UserType } from "@/app/(auth)/users/types/UserType"
-import { getRoleName } from "@/data/data"
-import { getStatusName } from "@/utils/fomaters"
-import DropDownUserAction from "./DropDownUserAction"
-export function ListofUser({ users }: { users: UserType[] }) {
+import DropDownRoleAction from "./DropDownRoleAction"
+import { RoleType } from "../types/RoleType"
+export function ListofRoles({ roles }: { roles: RoleType[] }) {
   return (
     <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
       <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -11,16 +9,10 @@ export function ListofUser({ users }: { users: UserType[] }) {
             ID
           </th>
           <th scope="col" className="px-6 py-3">
-            Nombre
-          </th>
-          <th scope="col" className="px-6 py-3">
             Rol
           </th>
           <th scope="col" className="px-6 py-3">
-            Contribuyente
-          </th>
-          <th scope="col" className="px-6 py-3">
-            Estado
+            Descripción
           </th>
           <th scope="col" className="px-6 py-3">
             Acción
@@ -28,23 +20,26 @@ export function ListofUser({ users }: { users: UserType[] }) {
         </tr>
       </thead>
       <tbody>
-        {users.map((user: UserType) => (
+        {roles.map((item: RoleType) => (
           <tr
-            key={user.id}
+            key={item.id}
             className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
           >
             <th
               scope="row"
               className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
             >
-              {user.username}
+              {item.id}
             </th>
-            <td className="px-6 py-4">{user.name}</td>
-            <td className="px-6 py-4">{getRoleName(user.roleId)}</td>
-            <td className="px-6 py-4">{user.taxpayer ? "SI" : "NO"}</td>
-            <td className="px-6 py-4">{getStatusName(user.status)}</td>
+            <th
+              scope="row"
+              className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+            >
+              {item.name}
+            </th>
+            <td className="px-6 py-4">{item.description}</td>
             <td className="px-6 py-4">
-              <DropDownUserAction id={user.id as number} />
+              <DropDownRoleAction id={item.id} />
             </td>
           </tr>
         ))}

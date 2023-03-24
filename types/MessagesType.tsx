@@ -1,5 +1,5 @@
 export type MessagesType = {
-  infoMessages: string
-  successMessages: string
-  errorMessages: string
+  infoMessage: string
+  successMessage: string
+  errorMessage: string
 }
