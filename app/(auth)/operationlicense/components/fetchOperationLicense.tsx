@@ -51,3 +51,11 @@ export async function updateBillboard<BillBoardMessage>(
 
   return response
 }
+
+export async function fetchEconomicActivities(url: string) {
+  return fetch(url).then((res) => res.json())
+}
+
+export async function fetchRejectionReasons(url: string) {
+  return fetch(url).then((res) => res.json())
+}

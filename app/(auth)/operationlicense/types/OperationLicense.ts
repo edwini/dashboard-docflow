@@ -14,7 +14,12 @@ export type OperationLicensePagesType = {
   numberOfElements: number
   empty: boolean
 }
-
+type Document = {
+  signatureBase64: string
+  rtnBase64: string
+  dniBase64: string
+  municipalSolvencyBase64: string
+}
 
 export type OperationLicenseType = {
   createdBy: string
@@ -43,6 +48,6 @@ export type OperationLicenseType = {
   units: number
   status: STATUS
   licenseYear: number
-  signature: string
   billboards: BillBoards[]
+  document: Document
 }

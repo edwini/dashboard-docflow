@@ -1,23 +1,24 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import { BillBoardMessage } from "@/app/(auth)/operationlicense/types/BillboardsType"
 import { ROLES } from "@/data/data"
-import { URL_BILLBOARDS } from "@/utils/apis"
+import { URL_BILLBOARDS, URL_OPERATION_LICENSE_STATUS } from "@/utils/apis"
 import type { NextApiRequest, NextApiResponse } from "next"
 import { getToken } from "next-auth/jwt"
-import { authOptions } from "./auth/[...nextauth]"
+import { authOptions } from "../auth/[...nextauth]"
+
 //Permite enviar datos al servidor del docflow-api
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<BillBoardMessage>,
+  res: NextApiResponse,
 ) {
   // rome-ignore lint/suspicious/noExplicitAny: <explanation>
   const token: any = await getToken({
     req: req,
     secret: authOptions.secret,
   })
-  const URL = URL_BILLBOARDS()
+  const URL = URL_OPERATION_LICENSE_STATUS("processing")
   console.log("ROL", token.content.roleId)
-  const roles = [ROLES.ADMINISTRADOR, ROLES.PLANIFICACION]
+  const roles = [ROLES.ADMINISTRADOR, ROLES.CONTROL_TRIBUTARIO]
   if (!roles.includes(token.content.roleId)) {
     const data: BillBoardMessage = {
       messages: {

@@ -4,6 +4,9 @@ export const URL_OPERATION_LICENSE = (page: number, limit: number) => {
 export const URL_OPERATION_LICENSE_ID = (id: number) => {
   return `${process.env.DASHBOARD_API}/operation-licenses/${id}`
 }
+export const URL_OPERATION_LICENSE_STATUS = (status: string) => {
+  return `${process.env.DASHBOARD_API}/operation-licenses/${status}`
+}
 export const URL_USER_ID = (userid: number) => {
   return `${process.env.DASHBOARD_API}/users/${userid}/`
 }
@@ -29,6 +32,12 @@ export const URL_ROLE = (userid?: number, limit?: number) => {
   if (userid !== undefined) url.pathname += `${userid}/`
   if (limit !== undefined) url.pathname += `${limit}/`
   return url.toString()
+}
+export const URL_ECONOMIC_ACTIVITY = () => {
+  return `${process.env.DASHBOARD_API}/economic-activities/`
+}
+export const URL_REJECTION_REASON = () => {
+  return `${process.env.DASHBOARD_API}/rejection-reasons/`
 }
 export const URL_AUTH_LOGIN = () => {
   return `${process.env.DASHBOARD_API}/auth/authenticate`
