@@ -37,7 +37,7 @@ export default async function Page({
           </div>
           <div className="mt-5 flex lg:mt-0 lg:ml-4">
             <Link
-              href="/users/0?action=new"
+              href="/roles/0?action=new"
               className="inline-flex items-center rounded-md border border-gray-300 bg-amber-600 px-4 py-2 text-sm font-medium text-white shadow-sm  hover:bg-amber-700  focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2"
             >
               Crear nuevo rol

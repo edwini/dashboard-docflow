@@ -1,3 +1,6 @@
+import { STATUS } from "@/data/data"
+import { BillBoards } from "./BillboardsType"
+
 export type OperationLicensePagesType = {
   content: OperationLicenseType[]
   pageable: {}
@@ -12,17 +15,6 @@ export type OperationLicensePagesType = {
   empty: boolean
 }
 
-export type BillBoards = {
-  id: number
-  licenseId: number
-  type: string
-  location: string
-  weight: number
-  height: number
-  large: number
-  photo: string
-  pole: boolean
-}
 
 export type OperationLicenseType = {
   createdBy: string
@@ -39,6 +31,8 @@ export type OperationLicenseType = {
   catastralId: string
   commercialName: string
   rtn: string
+  rtm: string
+  expedient: string
   email: string
   webSide: string
   production: number
@@ -47,7 +41,7 @@ export type OperationLicenseType = {
   otherFunds: number
   controlledProduct: number
   units: number
-  status: string
+  status: STATUS
   licenseYear: number
   signature: string
   billboards: BillBoards[]

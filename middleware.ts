@@ -1,5 +1,3 @@
-import { ROLES } from "./data/data";
-
 import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
 import { withAuth } from "next-auth/middleware";
@@ -40,25 +38,27 @@ export default withAuth(
     // rome-ignore lint/suspicious/noExplicitAny: <explanation>
     const token: any = await getToken({ req });
 
+    console.log("MIDD");
     if (
       BLOCKED_ROUTES.some((route) => pathname.startsWith(route)) &&
-      token.content.roleId !== ROLES.ADMIN
+      token.content.taxpayer
     ) {
+      console.log("NO AUTORIZADO");
       const url = new URL("/auth-denied", req.url);
-      /*url.searchParams.set(
+      url.searchParams.set(
       "error",
       "No tiene permisos para accesar a este recurso.",
-    );*/
+    );
       return NextResponse.redirect(url);
     }
 
     return res;
   },
   {
-    callbacks: {
-      //TODO: Fix this type
+    callbacks: { 
       // rome-ignore lint/suspicious/noExplicitAny: <explanation>
       authorized: ({ token }: any) => !token?.content.taxpayer,
+
     },
   },
 );

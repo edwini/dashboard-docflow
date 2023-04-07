@@ -50,7 +50,8 @@ export default async function Sidebar() {
       <ul className="space-y-2">
         {menu
           .filter((item) => {
-            if (session?.user.content.roleId === ROLES.ADMIN) return true
+            if (session?.user.content.roleId === ROLES.ADMINISTRADOR)
+              return true
             return !BLOCKED_ROUTES.some((route) => item.link.startsWith(route))
           })
           .map((item, index) => (

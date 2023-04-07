@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { FormUserProps, UserType } from "../types/UserType"
 import { Button } from "@/components/ui/button"
 import { useRouter } from "next/navigation"
+import { ROLES } from "@/data/data"
 
 const schema = z.object({
   name: z.string().nonempty({ message: "El nombre es requerido" }),
@@ -20,6 +21,11 @@ const schema = z.object({
   createdDate: z.string().nullable().optional(),
   updatedDate: z.string().nullable().optional(),
   token: z.string().nullable().optional(),
+  rtn: z.string().min(10, "El RTN debe tener al menos 10 caracteres"),
+  dni: z
+    .string()
+    .length(13, "El DNI es de 13 caracteres")
+    .regex(/^\d+$/, "El DNI es de 13 caracteres"),
 })
 const FormUsers = (props: FormUserProps) => {
   const {
@@ -86,6 +92,24 @@ const FormUsers = (props: FormUserProps) => {
                 </span>
               </dd>
             </div>
+            <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+              <dt className="text-sm font-medium text-gray-500">RTN</dt>
+              <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                <Input type="text" {...register("rtn")} placeholder="..." />
+                <span className="text-sm text-red-500">
+                  {errors?.rtn?.message as string}
+                </span>
+              </dd>
+            </div>
+            <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+              <dt className="text-sm font-medium text-gray-500">DNI</dt>
+              <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                <Input type="text" {...register("dni")} placeholder="..." />
+                <span className="text-sm text-red-500">
+                  {errors?.dni?.message as string}
+                </span>
+              </dd>
+            </div>
             <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
               <dt className="text-sm font-medium text-gray-500">
                 Usuario Contribuyente
@@ -127,16 +151,17 @@ const FormUsers = (props: FormUserProps) => {
               </dd>
             </div>
             <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-              <dt className="text-sm font-medium text-gray-500">Permiso</dt>
+              <dt className="text-sm font-medium text-gray-500">Tipo de rol</dt>
               <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                 <select
                   {...register("roleId", { valueAsNumber: true })}
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-amber-500 focus:border-amber-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-amber-500 dark:focus:border-amber-500"
                 >
                   <option value="-1">Elija un permiso</option>
-                  <option value="1">Admin</option>
-                  <option value="2">Back Office</option>
-                  <option value="3">Contribuyente</option>
+                  <option value="1">ADMINISTRADOR</option>
+                  <option value="2">CONTROL TRIBUTARIO</option>
+                  <option value="3">PLANIFICACION</option>
+                  <option value="4">CONTRIBUYENTE</option>
                 </select>
                 <span className="text-sm text-red-500">
                   {errors?.roleId?.message as string}

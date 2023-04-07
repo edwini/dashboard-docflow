@@ -49,14 +49,14 @@ export default function Page({
       toast({
         variant: "destructive",
         title: "Actualiación de usuarios",
-        description: userResponse.messages.errorMessage,
+        description: userResponse?.messages?.errorMessage,
         duration: 2000,
       })
     } else {
       toast({
         variant: "success",
         title: "Actualiación de usuarios",
-        description: userResponse.messages.successMessage,
+        description: userResponse?.messages?.successMessage,
         duration: 2000,
       })
       router.push("/users/12/1")

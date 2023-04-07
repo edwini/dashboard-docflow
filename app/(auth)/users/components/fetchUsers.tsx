@@ -27,5 +27,6 @@ export async function updateUser(url: string, { arg }: { arg: UserType }) {
     method: method,
     body: JSON.stringify(arg),
   })
+
   return response
 }

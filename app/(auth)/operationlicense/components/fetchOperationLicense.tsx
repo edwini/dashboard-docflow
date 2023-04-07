@@ -1,6 +1,7 @@
 import { GetFetch } from "@/lib/fetch"
-import { OperationLicenseType } from "@/types/OperationLicense"
+import { OperationLicenseType } from "@/app/(auth)/operationlicense/types/OperationLicense"
 import { URL_OPERATION_LICENSE, URL_OPERATION_LICENSE_ID } from "@/utils/apis"
+import { BillBoards } from "../types/BillboardsType"
 
 export async function fetchOperationLicense(page: number) {
   const limit = parseInt(process.env.MAX_PAGE_SIZE || "5")
@@ -36,4 +37,17 @@ export async function fetchOperationLicenseAPI(page: number) {
     }
   }
   return data
+}
+
+export async function updateBillboard<BillBoardMessage>(
+  url: string,
+  { arg }: { arg: Partial<BillBoards> },
+) {
+  const urlapi = url
+  const response = await fetch(urlapi, {
+    method: "PUT",
+    body: JSON.stringify(arg),
+  })
+
+  return response
 }

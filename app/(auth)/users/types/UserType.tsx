@@ -1,3 +1,4 @@
+import { ROLES, STATUS } from "@/data/data"
 import { MessagesType } from "../../../../types/MessagesType"
 export type UserPagesType = {
   content: UserType[]
@@ -17,14 +18,16 @@ export type UserType = {
   username: string
   name: string
   phone: string
-  status?: string
+  status: STATUS
   taxpayer: boolean
   createdBy?: string
   updatedBy?: string
   updatedDate?: Date
   createdDate?: Date
-  roleId: number
+  roleId: ROLES
   token?: string
+  rtn?: string
+  dni?: string
 }
 export type UserMessageType = {
   content: UserType

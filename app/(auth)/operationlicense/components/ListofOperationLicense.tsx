@@ -1,4 +1,4 @@
-import { OperationLicenseType } from "@/types/OperationLicense"
+import { OperationLicenseType } from "@/app/(auth)/operationlicense/types/OperationLicense"
 import { FormatDate, getStatusName } from "@/utils/fomaters"
 import Link from "next/link"
 
@@ -30,10 +30,10 @@ export function ListofOperationLicense({
         </tr>
       </thead>
       <tbody>
-        {operations.map((operation: Partial<OperationLicenseType>) => (
+        {operations.map((operation: OperationLicenseType) => (
           <tr
             key={operation.id}
-            className=" bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+            className="border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
           >
             <th
               scope="row"
@@ -46,9 +46,7 @@ export function ListofOperationLicense({
             <td className="px-6 py-4">
               {FormatDate(new Date(operation.createdDate as string))}
             </td>
-            <td className="px-6 py-4">
-              <td className="px-6 py-4">{getStatusName(operation.status)}</td>
-            </td>
+            <td className="px-6 py-4">{operation.status}</td>
             <td className="px-6 py-4">
               <Link
                 href={`/operationlicense/${operation.id}`}

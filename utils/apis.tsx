@@ -13,6 +13,16 @@ export const URL_USERS = (userid?: number, limit?: number) => {
   if (limit !== undefined) url.pathname += `${limit}/`
   return url.toString()
 }
+export const URL_BILLBOARDS = (id?: number, operationId?: number) => {
+  const url = new URL(`${process.env.DASHBOARD_API}/billboards/`)
+  if (operationId !== undefined) url.pathname += `${operationId}/`
+  if (id !== undefined) url.pathname += `${id}/`
+  return url.toString()
+}
+
+export const URL_RESET_PASSWORD = () => {
+  return `${process.env.DASHBOARD_API}/auth/request-reset`
+}
 
 export const URL_ROLE = (userid?: number, limit?: number) => {
   const url = new URL(`${process.env.DASHBOARD_API}/roles/`)
