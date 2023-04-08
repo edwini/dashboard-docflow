@@ -13,7 +13,9 @@ import { fetchRejectionReasons } from "./fetchOperationLicense"
 import useSWR from "swr"
 import { RejectionReasonType } from "../types/RejectionReasonType"
 
-export default function RejectOperation() {
+export default function RejectOperation({
+  operationId,
+}: { operationId: number }) {
   const [open, setOpen] = useState(false)
   const ref = useRef<HTMLSelectElement>(null)
   const { data, error, isLoading } = useSWR<RejectionReasonType>(
@@ -22,7 +24,7 @@ export default function RejectOperation() {
   )
   async function onSubmitDone(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    console.log("Rechazado ", ref.current?.value)
+    console.log("Rechazado ", ref.current?.value, operationId)
 
     setOpen(false)
   }

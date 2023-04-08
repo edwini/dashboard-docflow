@@ -1,5 +1,6 @@
 import { Icons } from "@/components/icons"
 import { BackButton } from "@/components/ui/BackButton"
+import { STATUS_BILLBOARD } from "@/data/data"
 import { tiempoTranscurrido } from "@/utils/fomaters"
 import MainWrapper from "../../components/MainWrapper"
 import RejectOperation from "../components/DialogReject"
@@ -14,6 +15,13 @@ export default async function Page({
   const { operationid } = params
 
   const operationLicense = await fetchOperationLicenseId(operationid)
+  const permite =
+    (operationLicense?.billboards?.length === 0 ||
+      operationLicense?.billboards.some(
+        (billboard) => billboard.status !== STATUS_BILLBOARD.PENDIENTE,
+      )) === undefined
+      ? false
+      : true
 
   return (
     <MainWrapper title="Detalle de licencia">
@@ -22,8 +30,8 @@ export default async function Page({
           <Icons.chevronLeft />
           Regresar
         </BackButton>
-        <SendtoSimafi operationId={params.operationid} />
-        <RejectOperation />
+        <SendtoSimafi enabled={permite} operationId={params.operationid} />
+        <RejectOperation operationId={params.operationid} />
       </div>
       <div className="overflow-hidden bg-white shadow sm:rounded-lg">
         <div className="px-4 py-5 sm:px-6">
@@ -213,12 +221,6 @@ export default async function Page({
                 <th scope="col" className="px-6 py-3">
                   RTN
                 </th>
-                <th scope="col" className="px-6 py-3">
-                  DNI
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Solvencia municipal
-                </th>
               </tr>
             </thead>
             <tbody>
@@ -226,8 +228,8 @@ export default async function Page({
                 <td className="px-6 py-4">
                   <img
                     src={operationLicense?.document.signatureBase64 || ""}
-                    width="250px"
-                    height="120px"
+                    width="500px"
+                    height="250px"
                     className="object-cover object-center"
                     alt="Imagen no disponible"
                   />
@@ -235,17 +237,27 @@ export default async function Page({
                 <td className="px-6 py-4">
                   <img
                     src={operationLicense?.document.rtnBase64 || ""}
-                    width="250px"
-                    height="120px"
+                    width="500px"
+                    height="250px"
                     className="object-cover object-center"
                     alt="Imagen no disponible"
                   />
                 </td>
+              </tr>
+              <tr className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <th scope="col" className="px-6 py-3">
+                  DNI
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Solvencia municipal
+                </th>
+              </tr>
+              <tr className=" bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                 <td className="px-6 py-4">
                   <img
                     src={operationLicense?.document.dniBase64 || ""}
-                    width="250px"
-                    height="120px"
+                    width="500px"
+                    height="250px"
                     className="object-cover object-center"
                     alt="Imagen no disponible"
                   />
@@ -255,8 +267,8 @@ export default async function Page({
                     src={
                       operationLicense?.document.municipalSolvencyBase64 || ""
                     }
-                    width="250px"
-                    height="120px"
+                    width="500px"
+                    height="250px"
                     className="object-cover object-center"
                     alt="Imagen no  disponible"
                   />
@@ -267,14 +279,14 @@ export default async function Page({
         </div>
         <div className="px-4 py-5 sm:px-6">
           <h3 className="text-base font-semibold leading-6 text-gray-900">
-            Estado de la licencia:{" "}
-            <span className="p-4 boder-solid border-2 rounded-md border-amber-600 uppercase text-lg">
-              {operationLicense?.status}
-            </span>{" "}
-            desde{" "}
+            Estado de la licencia hace{" "}
             {tiempoTranscurrido(
               operationLicense?.updatedDate ?? operationLicense?.createdDate,
             )}
+            :{" "}
+            <span className="p-4 boder-solid border-2 rounded-md border-amber-600 uppercase text-lg">
+              {operationLicense?.status}
+            </span>
           </h3>
         </div>
       </div>
@@ -283,14 +295,9 @@ export default async function Page({
           <Icons.chevronLeft />
           Regresar
         </BackButton>
-        <span className="ml-3 hidden sm:block">
-          <button
-            type="button"
-            className="inline-flex items-center rounded-md border border-gray-300 bg-amber-600 px-4 py-2 text-sm font-medium text-white shadow-sm  hover:bg-amber-700  focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2"
-          >
-            Activar
-          </button>
-        </span>
+
+        <SendtoSimafi enabled={permite} operationId={params.operationid} />
+        <RejectOperation operationId={params.operationid} />
       </div>
     </MainWrapper>
   )

@@ -8,6 +8,13 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
+
 import { useState } from "react"
 import { Input } from "@/components/ui/input"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -17,6 +24,7 @@ import { StatusOperationLicense } from "../types/StatusOperationLicense"
 import { EconomicActivityType } from "../types/EconomicActivityType"
 import { fetchEconomicActivities } from "./fetchOperationLicense"
 import useSWR from "swr"
+import { Button } from "@/components/ui/button"
 const schema = z.object({
   totalBillboards: z
     .number()
@@ -29,7 +37,12 @@ const schema = z.object({
     .nonnegative("El total de declaracion tardia debe ser mayor o igual a 0"),
   economicActivity: z.number().nonnegative("Actividad economica es requerida"),
 })
-export default function SendtoSimafi({ operationId }: { operationId: number }) {
+const textoDialog =
+  "Enviar el registro del permiso hasta que todos los rotulos esten revisados."
+export default function SendtoSimafi({
+  enabled,
+  operationId,
+}: { enabled: boolean; operationId: number }) {
   const [open, setOpen] = useState(false)
 
   const { data, error, isLoading } = useSWR<EconomicActivityType>(
@@ -65,22 +78,29 @@ export default function SendtoSimafi({ operationId }: { operationId: number }) {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <button
-          type="button"
-          className="inline-flex items-center rounded-md border border-gray-300 bg-amber-600 px-4 py-2 text-sm font-medium text-white shadow-sm  hover:bg-amber-700  focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2"
-        >
-          Enviar a Control Tributario
-        </button>
-      </DialogTrigger>
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <DialogTrigger asChild>
+              <Button
+                type="button"
+                disabled={!enabled}
+                className="inline-flex items-center rounded-md border  border-gray-300 bg-amber-600 px-4 py-2 text-sm font-medium text-white shadow-sm  hover:bg-amber-700  focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2"
+              >
+                Enviar a Control Tributario
+              </Button>
+            </DialogTrigger>
+          </TooltipTrigger>
+          <TooltipContent>
+            <span className="text-sm font-bold ">{textoDialog}</span>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
       <DialogContent className="sm:max-w-[512px]">
         <form onSubmit={handleSubmit(onSubmitDone)}>
           <DialogHeader>
             <DialogTitle>Control tributario</DialogTitle>
-            <DialogDescription>
-              Completa el registro del permiso para enviarlo a Control
-              Tributario.
-            </DialogDescription>
+            <DialogDescription>{textoDialog}</DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 py-4">
             <div className="grid grid-cols-4 items-center gap-4">
