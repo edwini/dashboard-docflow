@@ -52,6 +52,19 @@ export async function updateBillboard<BillBoardMessage>(
   return response
 }
 
+export async function updateStatusOperationLicense<StatusOperationLicense>(
+  url: string,
+  { arg }: { arg: StatusOperationLicense },
+) {
+  const urlapi = url
+  const response = await fetch(urlapi, {
+    method: "PUT",
+    body: JSON.stringify(arg),
+  })
+
+  return response
+}
+
 export async function fetchEconomicActivities(url: string) {
   return fetch(url).then((res) => res.json())
 }

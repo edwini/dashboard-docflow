@@ -1,7 +1,5 @@
 import { Icons } from "@/components/icons"
-import { STATUS_BILLBOARD } from "@/data/data"
-import { BillBoards } from "@/app/(auth)/operationlicense/types/OperationLicense"
-import DropDownBillboardAction from "./DropDownBillboardAction"
+import { BillBoards } from "../types/BillboardsType"
 import StatusBillboard from "./StatusBillboard"
 
 export function ListOfBillboard({

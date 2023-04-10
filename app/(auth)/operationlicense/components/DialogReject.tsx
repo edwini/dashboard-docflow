@@ -9,24 +9,63 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { useRef, useState } from "react"
-import { fetchRejectionReasons } from "./fetchOperationLicense"
+import {
+  fetchRejectionReasons,
+  updateStatusOperationLicense,
+} from "./fetchOperationLicense"
 import useSWR from "swr"
+import useSWRMutation from "swr/mutation"
 import { RejectionReasonType } from "../types/RejectionReasonType"
+import { StatusOperationLicense } from "../types/StatusOperationLicense"
+import { useRouter } from "next/navigation"
+import { MessagesType } from "@/types/MessagesType"
 
+import { toast } from "@/hooks/useToast"
+import { Toaster } from "@/components/ui/Toaster"
 export default function RejectOperation({
   operationId,
 }: { operationId: number }) {
   const [open, setOpen] = useState(false)
+
+  const router = useRouter()
   const ref = useRef<HTMLSelectElement>(null)
   const { data, error, isLoading } = useSWR<RejectionReasonType>(
     "/api/rejection-reasons/",
     fetchRejectionReasons,
   )
+
+  const { trigger, isMutating } = useSWRMutation(
+    "/api/operationlicense/status",
+    updateStatusOperationLicense,
+  )
   async function onSubmitDone(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    console.log("Rechazado ", ref.current?.value, operationId)
+    const payload: StatusOperationLicense = {
+      id: operationId,
+      status: "RECHAZADO",
+      rejectionReason: ref.current?.value,
+    }
 
+    const response = await trigger(payload)
+    const dataMessage: MessagesType = await response?.json()
+
+    if (!response?.ok || dataMessage?.errorMessage) {
+      toast({
+        variant: "destructive",
+        title: "Enviar a Control Tributario",
+        description: dataMessage?.errorMessage,
+        duration: 8000,
+      })
+      return
+    }
+    toast({
+      variant: "success",
+      title: "Actualiación de rotulos",
+      description: dataMessage?.successMessage,
+      duration: 4000,
+    })
     setOpen(false)
+    router.refresh()
   }
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -50,7 +89,7 @@ export default function RejectOperation({
           <div className="grid gap-4 py-4">
             <div className="grid grid-cols-4 items-center gap-4">
               <label htmlFor="motivo" className="text-right">
-                Motivo
+                Motivo del rechazo
               </label>
               <select
                 ref={ref}
@@ -58,7 +97,7 @@ export default function RejectOperation({
                 className="col-span-3 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-amber-500 focus:border-amber-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-amber-500 dark:focus:border-amber-500"
               >
                 {data?.content.map(({ id, reason }) => (
-                  <option key={id} value={id}>
+                  <option key={id} value={reason}>
                     {reason}
                   </option>
                 ))}
@@ -75,6 +114,7 @@ export default function RejectOperation({
           </DialogFooter>
         </form>
       </DialogContent>
+      <Toaster />
     </Dialog>
   )
 }

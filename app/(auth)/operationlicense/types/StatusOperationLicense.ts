@@ -1,11 +1,10 @@
 export type StatusOperationLicense = {
   id: number //operationLicenseId
   status: string
-  rejectReason?: string
-  economicActivity?: string
+  rejectionReason?: string
+  economicActivityId?: string
   totalFine?: number
   totalLatePayment?: number
   totalBillboards?: number
   updatedBy?: string
-  updatedDate?: string
 }

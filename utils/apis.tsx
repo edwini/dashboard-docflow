@@ -4,8 +4,8 @@ export const URL_OPERATION_LICENSE = (page: number, limit: number) => {
 export const URL_OPERATION_LICENSE_ID = (id: number) => {
   return `${process.env.DASHBOARD_API}/operation-licenses/${id}`
 }
-export const URL_OPERATION_LICENSE_STATUS = (status: string) => {
-  return `${process.env.DASHBOARD_API}/operation-licenses/${status}`
+export const URL_OPERATION_LICENSE_STATUS = () => {
+  return `${process.env.DASHBOARD_API}/operation-licenses/status/`
 }
 export const URL_USER_ID = (userid: number) => {
   return `${process.env.DASHBOARD_API}/users/${userid}/`

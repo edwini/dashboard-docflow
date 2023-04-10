@@ -14,7 +14,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
-
+import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { Input } from "@/components/ui/input"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -22,9 +22,16 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { StatusOperationLicense } from "../types/StatusOperationLicense"
 import { EconomicActivityType } from "../types/EconomicActivityType"
-import { fetchEconomicActivities } from "./fetchOperationLicense"
+import {
+  fetchEconomicActivities,
+  updateStatusOperationLicense,
+} from "./fetchOperationLicense"
 import useSWR from "swr"
+import useSWRMutation from "swr/mutation"
 import { Button } from "@/components/ui/button"
+import { MessagesType } from "@/types/MessagesType"
+import { toast } from "@/hooks/useToast"
+import { Toaster } from "@/components/ui/Toaster"
 const schema = z.object({
   totalBillboards: z
     .number()
@@ -35,7 +42,9 @@ const schema = z.object({
   totalLatePayment: z
     .number({ required_error: "Campo requerido" })
     .nonnegative("El total de declaracion tardia debe ser mayor o igual a 0"),
-  economicActivity: z.number().nonnegative("Actividad economica es requerida"),
+  economicActivityId: z
+    .number()
+    .nonnegative("Actividad economica es requerida"),
 })
 const textoDialog =
   "Enviar el registro del permiso hasta que todos los rotulos esten revisados."
@@ -44,7 +53,7 @@ export default function SendtoSimafi({
   operationId,
 }: { enabled: boolean; operationId: number }) {
   const [open, setOpen] = useState(false)
-
+  const router = useRouter()
   const { data, error, isLoading } = useSWR<EconomicActivityType>(
     "/api/economic-activities/",
     fetchEconomicActivities,
@@ -54,7 +63,10 @@ export default function SendtoSimafi({
       revalidateOnReconnect: false,
     },
   )
-
+  const { trigger, isMutating } = useSWRMutation(
+    "/api/operationlicense/status",
+    updateStatusOperationLicense,
+  )
   //Ingresar el total de multa, total de rotulos, total de declaracion tardia
 
   const {
@@ -67,13 +79,33 @@ export default function SendtoSimafi({
       totalBillboards: 0,
       totalFine: 0,
       totalLatePayment: 0,
-      economicActivity: "-1",
+      economicActivityId: "-1",
     },
   })
   async function onSubmitDone(data: StatusOperationLicense) {
     data.id = operationId
-    console.log(data)
+    data.status = "PROCESADO"
+
+    const response = await trigger(data)
+    const dataMessage: MessagesType = await response?.json()
+
+    if (!response?.ok || dataMessage?.errorMessage) {
+      toast({
+        variant: "destructive",
+        title: "Enviar a Control Tributario",
+        description: dataMessage?.errorMessage,
+        duration: 8000,
+      })
+      return
+    }
+    toast({
+      variant: "success",
+      title: "Actualiación de rotulos",
+      description: dataMessage?.successMessage,
+      duration: 4000,
+    })
     setOpen(false)
+    router.refresh()
   }
 
   return (
@@ -107,7 +139,7 @@ export default function SendtoSimafi({
               <label className="text-right">Actividad economica</label>
               <div className=" col-span-3">
                 <select
-                  {...register("economicActivity", { valueAsNumber: true })}
+                  {...register("economicActivityId", { valueAsNumber: true })}
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-amber-500 focus:border-amber-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-amber-500 dark:focus:border-amber-500"
                 >
                   <option value="-1">Actividad economica principal</option>
@@ -119,7 +151,7 @@ export default function SendtoSimafi({
                   ))}
                 </select>
                 <span className="text-sm text-red-500">
-                  {errors?.economicActivity?.message as string}
+                  {errors?.economicActivityId?.message as string}
                 </span>
               </div>
             </div>
@@ -182,6 +214,8 @@ export default function SendtoSimafi({
           </DialogFooter>
         </form>
       </DialogContent>
+
+      <Toaster />
     </Dialog>
   )
 }
