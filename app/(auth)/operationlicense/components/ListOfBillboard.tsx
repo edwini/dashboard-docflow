@@ -1,4 +1,5 @@
 import { Icons } from "@/components/icons"
+import { FormatDate } from "@/utils/fomaters"
 import { BillBoards } from "../types/BillboardsType"
 import StatusBillboard from "./StatusBillboard"
 
@@ -25,6 +26,9 @@ export function ListOfBillboard({
             Estado
           </th>
           <th scope="col" className="px-4 py-3">
+            Usuario y Fecha
+          </th>
+          <th scope="col" className="px-4 py-3">
             Foto
           </th>
         </tr>
@@ -42,6 +46,8 @@ export function ListOfBillboard({
               pole,
               photo,
               status,
+              updatedBy,
+              updatedDate,
             }: BillBoards,
             index,
           ) => {
@@ -63,23 +69,17 @@ export function ListOfBillboard({
                   <StatusBillboard id={id} status={status} />
                 </td>
                 <td className="px-4 py-4">
-                  <div className="flex w-0 flex-1 items-center">
-                    <Icons.paperClip
-                      className="h-5 w-5 flex-shrink-0 text-gray-400"
-                      aria-hidden="true"
-                    />
-                    <span className="ml-2 w-0 flex-1 truncate">
-                      imagen_rotulo_{index}.jpg
-                    </span>
-                    <a
-                      download={`imagen_rotulo_${index}.png`}
-                      href={photo}
-                      target="blank"
-                      className="font-medium text-amber-600 hover:text-amber-500"
-                    >
-                      Ver imagen
-                    </a>
-                  </div>
+                  {updatedBy} - {FormatDate(updatedDate)}
+                </td>
+                <td className="px-4 py-4">
+                  <a
+                    download={`imagen_rotulo_${index}.png`}
+                    href={photo}
+                    target="blank"
+                    className="font-medium text-amber-600 hover:text-amber-500"
+                  >
+                    Ver imagen
+                  </a>
                 </td>
               </tr>
             )

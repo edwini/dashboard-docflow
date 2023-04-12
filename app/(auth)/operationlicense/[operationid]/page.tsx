@@ -1,7 +1,7 @@
 import { Icons } from "@/components/icons"
 import { BackButton } from "@/components/ui/BackButton"
 import { STATUS_BILLBOARD } from "@/data/data"
-import { tiempoTranscurrido } from "@/utils/fomaters"
+import { FormatDate, tiempoTranscurrido } from "@/utils/fomaters"
 import MainWrapper from "../../components/MainWrapper"
 import RejectOperation from "../components/DialogReject"
 import SendtoSimafi from "../components/DialogSendtoSimafi"
@@ -219,7 +219,7 @@ export default async function Page({
                   Firma
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  RTN
+                  Solvencia municipal
                 </th>
               </tr>
             </thead>
@@ -230,35 +230,7 @@ export default async function Page({
                     src={operationLicense?.document.signatureBase64 || ""}
                     width="500px"
                     height="250px"
-                    className="object-cover object-center"
-                    alt="Imagen no disponible"
-                  />
-                </td>
-                <td className="px-6 py-4">
-                  <img
-                    src={operationLicense?.document.rtnBase64 || ""}
-                    width="500px"
-                    height="250px"
-                    className="object-cover object-center"
-                    alt="Imagen no disponible"
-                  />
-                </td>
-              </tr>
-              <tr className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                <th scope="col" className="px-6 py-3">
-                  DNI
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Solvencia municipal
-                </th>
-              </tr>
-              <tr className=" bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                <td className="px-6 py-4">
-                  <img
-                    src={operationLicense?.document.dniBase64 || ""}
-                    width="500px"
-                    height="250px"
-                    className="object-cover object-center"
+                    className="object-cover object-center  transform hover:scale-150 transition duration-300 hover:translate-x-1/2 hover:-translate-y-1/2"
                     alt="Imagen no disponible"
                   />
                 </td>
@@ -269,8 +241,36 @@ export default async function Page({
                     }
                     width="500px"
                     height="250px"
-                    className="object-cover object-center"
+                    className="object-cover object-center  transform hover:scale-150 transition duration-300 hover:-translate-x-1/2 hover:-translate-y-1/2"
                     alt="Imagen no  disponible"
+                  />
+                </td>
+              </tr>
+              <tr className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <th scope="col" className="px-6 py-3">
+                  RTN
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  DNI
+                </th>
+              </tr>
+              <tr className=" bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                <td className="px-6 py-4">
+                  <img
+                    src={operationLicense?.document.rtnBase64 || ""}
+                    width="500px"
+                    height="250px"
+                    className="object-cover object-center  transform hover:scale-150 transition duration-300 hover:translate-x-1/2 hover:-translate-y-1/2"
+                    alt="Imagen no disponible"
+                  />
+                </td>
+                <td className="px-6 py-4">
+                  <img
+                    src={operationLicense?.document.dniBase64 || ""}
+                    width="500px"
+                    height="250px"
+                    className="object-cover object-center  transform hover:scale-150 transition duration-300 hover:-translate-x-1/2 hover:-translate-y-1/2"
+                    alt="Imagen no disponible"
                   />
                 </td>
               </tr>
@@ -290,7 +290,7 @@ export default async function Page({
           </h3>
         </div>
       </div>
-      <div className="flex pt-4">
+      <div className="flex pt-4 pb-4">
         <BackButton variant="link">
           <Icons.chevronLeft />
           Regresar
@@ -298,6 +298,51 @@ export default async function Page({
 
         <SendtoSimafi enabled={permite} operationId={params.operationid} />
         <RejectOperation operationId={params.operationid} />
+      </div>
+
+      <div className="overflow-hidden bg-white shadow sm:rounded-lg">
+        <div className="px-4 py-5 sm:px-6">
+          <h3 className="text-base font-semibold leading-6 text-gray-900">
+            Información de auditoria
+          </h3>
+          <p className="mt-1 max-w-2xl text-sm text-gray-500">
+            Información de auditoria del permiso de operación.
+          </p>
+        </div>
+        <div className="border-t border-gray-200 overflow-x-scroll ">
+          <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+            <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+              <tr>
+                <th scope="col" colSpan={2} className="px-2 py-3">
+                  Registrado por
+                </th>
+                <th scope="col" colSpan={2} className="px-6 py-3">
+                  Modificado por
+                </th>
+                <th scope="col" className="px-2 py-3">
+                  Motivo de rechazo
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className=" bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                <td scope="row" className="px-2 py-4">
+                  {operationLicense?.createdBy}
+                </td>
+                <td className="px-6 py-4">
+                  {FormatDate(operationLicense?.createdDate)}
+                </td>
+                <td className="px-2 py-4">{operationLicense?.updatedBy}</td>
+                <td className="px-2 py-4">
+                  {FormatDate(operationLicense?.updatedDate)}
+                </td>
+                <td className="px-4 py-4 flex justify-between items-center">
+                  {operationLicense?.rejectionReason}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </MainWrapper>
   )

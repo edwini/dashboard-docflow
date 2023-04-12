@@ -1,11 +1,15 @@
 import { Icons } from "@/components/icons"
 import { STATUS } from "@/data/data"
 
-export const FormatDate = (date: Date) => {
-  return date.toLocaleDateString("es-US", {
+export const FormatDate = (date: string | null | undefined) => {
+  if (!date) return ""
+  const _date = new Date(date)
+  return _date.toLocaleDateString("es-US", {
     day: "numeric",
     month: "long",
     year: "numeric",
+    hour: "numeric",
+    minute: "numeric",
   })
 }
 

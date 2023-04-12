@@ -100,7 +100,7 @@ export default function SendtoSimafi({
     }
     toast({
       variant: "success",
-      title: "Actualiación de rotulos",
+      title: "Enviar a Control Tributario",
       description: dataMessage?.successMessage,
       duration: 4000,
     })

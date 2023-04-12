@@ -37,7 +37,7 @@ export default async function Sidebar() {
       },
       {
         id: 4,
-        name: "Licencias",
+        name: "Permisos de operación",
         icon: (
           <Icons.inbox className="w-6 h-6 text-white transition duration-75 dark:text-gray-400 group-hover:text-amber-600 dark:group-hover:text-white" />
         ),

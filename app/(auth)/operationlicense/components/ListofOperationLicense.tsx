@@ -43,9 +43,7 @@ export function ListofOperationLicense({
             </th>
             <td className="px-6 py-4">{operation.commercialName}</td>
             <td className="px-6 py-4">{operation.rtn}</td>
-            <td className="px-6 py-4">
-              {FormatDate(new Date(operation.createdDate as string))}
-            </td>
+            <td className="px-6 py-4">{FormatDate(operation.createdDate)}</td>
             <td className="px-6 py-4">{operation.status}</td>
             <td className="px-6 py-4">
               <Link

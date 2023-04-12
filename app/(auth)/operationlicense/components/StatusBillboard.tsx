@@ -52,7 +52,7 @@ export default function StatusBillboard({
     <>
       {statusLabel}
       {statusLabel === STATUS_BILLBOARD.PENDIENTE && (
-        <DropDownBillboardAction id={1} changeStatus={handleChangeStatus} />
+        <DropDownBillboardAction id={id} changeStatus={handleChangeStatus} />
       )}
 
       <Toaster />

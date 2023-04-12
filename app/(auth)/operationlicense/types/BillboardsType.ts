@@ -12,8 +12,10 @@ export type BillBoards = {
   photo: string
   pole: boolean
   status: STATUS_BILLBOARD
+  updatedDate: string
+  updatedBy: string
 }
 export type BillBoardMessage = {
-  messages?: MessagesType,
+  messages?: MessagesType
   content?: BillBoards
 }

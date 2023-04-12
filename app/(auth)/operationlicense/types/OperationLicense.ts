@@ -50,4 +50,5 @@ export type OperationLicenseType = {
   licenseYear: number
   billboards: BillBoards[]
   document: Document
+  rejectionReason: string
 }

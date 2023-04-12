@@ -28,13 +28,17 @@ export default async function handler(
     }
     res.status(500).json(data)
   } else {
+    const payload = JSON.parse(req.body)
+    payload.updatedBy = token.content.username
+    console.log("PAYLOAD", payload)
+
     const response = await fetch(URL, {
       method: req.method,
       headers: {
         Authorization: `Bearer ${token?.token}`,
         "Content-Type": "application/json",
       },
-      body: req.body,
+      body: JSON.stringify(payload),
     })
     const data = await response.json()
 

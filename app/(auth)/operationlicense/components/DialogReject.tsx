@@ -52,7 +52,7 @@ export default function RejectOperation({
     if (!response?.ok || dataMessage?.errorMessage) {
       toast({
         variant: "destructive",
-        title: "Enviar a Control Tributario",
+        title: "Rechazar permiso de operación",
         description: dataMessage?.errorMessage,
         duration: 8000,
       })
@@ -60,7 +60,7 @@ export default function RejectOperation({
     }
     toast({
       variant: "success",
-      title: "Actualiación de rotulos",
+      title: "Rechazar permiso de operación",
       description: dataMessage?.successMessage,
       duration: 4000,
     })
