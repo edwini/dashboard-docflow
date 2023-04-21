@@ -11,6 +11,8 @@ export type BillBoards = {
   large: number
   photo: string
   pole: boolean
+  diameter: number
+  poleLocation: string
   status: STATUS_BILLBOARD
   updatedDate: string
   updatedBy: string

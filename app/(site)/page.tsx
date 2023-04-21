@@ -33,11 +33,11 @@ export default function Home() {
     })
     console.log("LOGIN", login)
     if (!login?.ok) {
-      setLoading(false)
       setError("Usuario y contraseña incorrectos")
       return
     }
 
+    setLoading(false)
     router.push("/dashboard")
   }
 
