@@ -2,7 +2,7 @@
 import { BillBoardMessage } from "@/app/(auth)/operationlicense/types/BillboardsType"
 import { StatusOperationLicense } from "@/app/(auth)/operationlicense/types/StatusOperationLicense"
 import { ROLES } from "@/data/data"
-import { URL_BILLBOARDS, URL_OPERATION_LICENSE_STATUS } from "@/utils/apis"
+import { URL_OPERATION_LICENSE_STATUS } from "@/utils/apis"
 import type { NextApiRequest, NextApiResponse } from "next"
 import { getToken } from "next-auth/jwt"
 import { authOptions } from "../auth/[...nextauth]"

@@ -1,5 +1,5 @@
 import { OperationLicenseType } from "@/app/(auth)/operationlicense/types/OperationLicense"
-import { FormatDate, getStatusName } from "@/utils/fomaters"
+import { FormatDate } from "@/utils/fomaters"
 import Link from "next/link"
 
 export function ListofOperationLicense({
@@ -41,7 +41,7 @@ export function ListofOperationLicense({
             >
               {operation.id}
             </th>
-            <td className="px-6 py-4">{operation.commercialName}</td>
+            <td className="px-6 py-4">{operation.businessName}</td>
             <td className="px-6 py-4">{operation.rtn}</td>
             <td className="px-6 py-4">{FormatDate(operation.createdDate)}</td>
             <td className="px-6 py-4">{operation.status}</td>

@@ -40,3 +40,6 @@ export const URL_REJECTION_REASON = () => {
 export const URL_AUTH_LOGIN = () => {
   return `${process.env.DASHBOARD_API}/auth/authenticate`
 }
+export const URL_OPERATION_LICENSE_FILTERING = (search?: string) => {
+  return `${process.env.DASHBOARD_API}/operation-licenses/user/status/null/null/0/5?filter=${search}`
+}

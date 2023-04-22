@@ -1,4 +1,4 @@
-import { STATUS } from "@/data/data"
+import { STATUS, STATUS_OPERATION_LICENSE } from "@/data/data"
 import { BillBoards } from "./BillboardsType"
 
 export type OperationLicensePagesType = {
@@ -46,7 +46,7 @@ export type OperationLicenseType = {
   otherFunds: number
   controlledProduct: number
   units: number
-  status: STATUS
+  status: STATUS_OPERATION_LICENSE
   licenseYear: number
   billboards: BillBoards[]
   document: Document

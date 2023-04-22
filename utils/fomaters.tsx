@@ -1,5 +1,5 @@
 import { Icons } from "@/components/icons"
-import { STATUS } from "@/data/data"
+import { STATUS, STATUS_OPERATION_LICENSE } from "@/data/data"
 
 export const FormatDate = (date: string | null | undefined) => {
   if (!date) return ""
@@ -20,7 +20,7 @@ export const FormatCurrency = (value: number, currency: string = "HNL") => {
   })
 }
 
-export function getStatusName(statusValue: STATUS) {
+export function getStatusUserName(statusValue: STATUS) {
   const statusColor = {
     ACTIVO: "bg-green-600",
     ELIMINADO: "bg-red-600",
@@ -35,6 +35,28 @@ export function getStatusName(statusValue: STATUS) {
       </span>
       {statusValue}
     </div>
+  )
+}
+export function getStatusOperationName(statusValue: STATUS_OPERATION_LICENSE) {
+  const statusColor = {
+    PENDIENTE: "bg-amber-600",
+    PROCESANDO: "bg-amber-600",
+    "RECIBO GENERADO": "bg-green-600",
+    PAGADO: "bg-green-600",
+    IMPRESA: "bg-green-600",
+    RECHAZADO: "bg-red-600",
+  }
+  return (
+    //css span to circle
+
+    <>
+      <span
+        className={`p-2 rounded-full mr-2 ml-2 h-2 w-2  ${statusColor[statusValue]}`}
+      >
+        {" "}
+      </span>
+      {statusValue}
+    </>
   )
 }
 

@@ -1,6 +1,10 @@
 import { GetFetch } from "@/lib/fetch"
 import { OperationLicenseType } from "@/app/(auth)/operationlicense/types/OperationLicense"
-import { URL_OPERATION_LICENSE, URL_OPERATION_LICENSE_ID } from "@/utils/apis"
+import {
+  URL_OPERATION_LICENSE,
+  URL_OPERATION_LICENSE_FILTERING,
+  URL_OPERATION_LICENSE_ID,
+} from "@/utils/apis"
 import { BillBoards } from "../types/BillboardsType"
 
 export async function fetchOperationLicense(page: number) {
@@ -71,4 +75,21 @@ export async function fetchEconomicActivities(url: string) {
 
 export async function fetchRejectionReasons(url: string) {
   return fetch(url).then((res) => res.json())
+}
+
+export async function fetchOperationLicenseFiltering(url: string) {
+  return fetch(url).then((res) => res.json())
+}
+export async function fetchOperationLicenseFiltering2(
+  serchValue: string,
+): Promise<OperationLicenseType[] | null> {
+  console.log(serchValue)
+  const data = await GetFetch(URL_OPERATION_LICENSE_FILTERING(serchValue))
+
+  if (!data) {
+    return null
+  }
+  console.log(data)
+
+  return data.content
 }

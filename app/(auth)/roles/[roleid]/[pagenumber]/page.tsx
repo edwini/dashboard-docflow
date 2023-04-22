@@ -24,17 +24,6 @@ export default async function Page({
     <MainWrapper title="Administración de roles">
       <div className="relative overflow-x-auto">
         <div className="p-4 bg-white dark:bg-gray-900 lg:flex lg:items-center lg:justify-between">
-          <div className="relative mt-1">
-            <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-              <Icons.search />
-            </div>
-            <input
-              type="text"
-              id="table-search"
-              className="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder="Buscar por ID, nombre"
-            />
-          </div>
           <div className="mt-5 flex lg:mt-0 lg:ml-4">
             <Link
               href="/roles/0?action=new"

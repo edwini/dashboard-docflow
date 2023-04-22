@@ -4,7 +4,7 @@ import { Toaster } from "@/components/ui/Toaster"
 import { getRoleName } from "@/data/data"
 import { toast } from "@/hooks/useToast"
 import useSWRMutation from "swr/mutation"
-import { getStatusName } from "@/utils/fomaters"
+import { getStatusUserName } from "@/utils/fomaters"
 import DropDownUserAction from "./DropDownUserAction"
 import { updateUser } from "./fetchUsers"
 export function ListofUser({ users }: { users: UserType[] }) {
@@ -67,7 +67,7 @@ export function ListofUser({ users }: { users: UserType[] }) {
             <td className="px-6 py-4">{user.name}</td>
             <td className="px-6 py-4">{getRoleName(user.roleId)}</td>
             <td className="px-6 py-4">{user.taxpayer ? "SI" : "NO"}</td>
-            <td className="px-6 py-4 ">{getStatusName(user.status)}</td>
+            <td className="px-6 py-4 ">{getStatusUserName(user.status)}</td>
             <td className="px-6 py-4">
               <DropDownUserAction
                 id={user.id as number}
