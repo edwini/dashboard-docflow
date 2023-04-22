@@ -78,7 +78,7 @@ export default function AutoComplete(props) {
           />
           {autocompleteState.isOpen && (
             <div
-              className="absolute mt-12 top-0 left-0 border border-amber-400 z-10 w-full  overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800"
+              className="absolute mt-14 top-0 left-0 border border-amber-400 z-10 w-full  overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800"
               ref={panelRef}
               {...autocomplete.getPanelProps()}
             >
