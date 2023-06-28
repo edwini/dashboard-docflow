@@ -9,12 +9,14 @@ export default async function handler(
   res: NextApiResponse<[]>,
 ) {
   const { params } = _req.query || {}
-  if (params && params!.length === 2) {
-    const URL = URL_USERS(parseInt(params![0]), parseInt(params![1]))
+  if (params && params?.length === 2) {
+    const URL = URL_USERS(parseInt(params?.[0]), parseInt(params?.[1]))
     const data = await GetFetch(URL)
+    console.log(URL)
     res.status(200).json(data)
-  } else if (params && params!.length === 1) {
-    const URL = URL_USER_ID(parseInt(params![0]))
+  } else if (params && params?.length === 1) {
+    const URL = URL_USER_ID(parseInt(params?.[0]))
+    console.log(URL)
     const token = await getToken({
       req: _req,
       secret: authOptions.secret,

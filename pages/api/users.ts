@@ -1,5 +1,5 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import {  URL_USERS } from "@/utils/apis";
+import { URL_USERS } from "@/utils/apis";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { getToken } from "next-auth/jwt";
 import { authOptions } from "./auth/[...nextauth]";
@@ -18,8 +18,8 @@ export default async function handler(
     secret: authOptions.secret,
   });
   req.body
-  const userdata={...JSON.parse(req.body), password: "12345678"};
-  
+  const userdata = { ...JSON.parse(req.body), password: "12345678" };
+
   const URL = URL_USERS();
   const response = await fetch(URL, {
     method: req.method,
@@ -29,6 +29,8 @@ export default async function handler(
     },
     body: JSON.stringify(userdata),
   });
+  console.log(userdata);
+
   const data = await response.json();
   res.status(response.status).json(data);
 }

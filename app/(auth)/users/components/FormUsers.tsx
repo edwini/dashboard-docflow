@@ -21,11 +21,8 @@ const schema = z.object({
   createdDate: z.string().nullable().optional(),
   updatedDate: z.string().nullable().optional(),
   token: z.string().nullable().optional(),
-  rtn: z.string().min(10, "El RTN debe tener al menos 10 caracteres"),
-  dni: z
-    .string()
-    .length(13, "El DNI es de 13 caracteres")
-    .regex(/^\d+$/, "El DNI es de 13 caracteres"),
+  rtn: z.string().nullable().optional(),
+  dni: z.string().nullable().optional(),
 })
 const FormUsers = (props: FormUserProps) => {
   const {
