@@ -1,12 +1,15 @@
 import { Icons } from "@/components/icons"
 import { BackButton } from "@/components/ui/BackButton"
-import { STATUS_BILLBOARD } from "@/data/data"
+import { ROLES, STATUS_BILLBOARD } from "@/data/data"
 import { FormatDate, tiempoTranscurrido } from "@/utils/fomaters"
 import MainWrapper from "../../components/MainWrapper"
 import RejectOperation from "../components/DialogReject"
 import SendtoSimafi from "../components/DialogSendtoSimafi"
 import { fetchOperationLicenseId } from "../components/fetchOperationLicense"
 import { ListOfBillboard } from "../components/ListOfBillboard"
+import { authOptions } from "@/pages/api/auth/[...nextauth]"
+import { getServerSession } from "next-auth"
+
 export default async function Page({
   params,
 }: {
@@ -14,6 +17,7 @@ export default async function Page({
 }) {
   const { operationid } = params
 
+  const session = await getServerSession(authOptions)
   const operationLicense = await fetchOperationLicenseId(operationid)
   const permite =
     (operationLicense?.billboards?.length === 0 ||
@@ -30,8 +34,14 @@ export default async function Page({
           <Icons.chevronLeft />
           Regresar
         </BackButton>
-        <SendtoSimafi enabled={permite} operationId={params.operationid} />
-        <RejectOperation operationId={params.operationid} />
+        {session?.user.content.roleId === ROLES.ADMINISTRADOR ? (
+          <>
+            <SendtoSimafi enabled={permite} operationId={params.operationid} />
+            <RejectOperation operationId={params.operationid} />
+          </>
+        ) : (
+          <></>
+        )}
       </div>
       <div className="overflow-hidden bg-white shadow sm:rounded-lg">
         <div className="px-4 py-5 sm:px-6">
@@ -295,9 +305,14 @@ export default async function Page({
           <Icons.chevronLeft />
           Regresar
         </BackButton>
-
-        <SendtoSimafi enabled={permite} operationId={params.operationid} />
-        <RejectOperation operationId={params.operationid} />
+        {session?.user.content.roleId === ROLES.ADMINISTRADOR ? (
+          <>
+            <SendtoSimafi enabled={permite} operationId={params.operationid} />
+            <RejectOperation operationId={params.operationid} />
+          </>
+        ) : (
+          <></>
+        )}
       </div>
 
       <div className="overflow-hidden bg-white shadow sm:rounded-lg">
