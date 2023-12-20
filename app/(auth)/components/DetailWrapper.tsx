@@ -1,20 +1,20 @@
-import { Icons } from "@/components/icons"
-import { ReactNode } from "react"
+import { Icons } from "@/components/icons";
+import { ReactNode } from "react";
 
 type MainWrapperType = {
-  title: string
-  children: ReactNode
-}
+	title: string;
+	children: ReactNode;
+};
 //Aqui es donde se van a manejar los estados de los componentes hijos
 export default function DetailWrapper({ title, children }: MainWrapperType) {
-  return (
-    <>
-      <header className="mt-14">
-        <div className="p-4 sm:ml-64 lg:flex lg:items-center lg:justify-between">
-          <h1 className="text-3xl font-bold tracking-tight text-gray-900">
-            {title}
-          </h1>
-          {/*
+	return (
+		<>
+			<header className="mt-14">
+				<div className="p-4 sm:ml-64 lg:flex lg:items-center lg:justify-between">
+					<h1 className="text-3xl font-bold tracking-tight text-gray-900">
+						{title}
+					</h1>
+					{/*
           <div className="mt-5 flex lg:mt-0 lg:ml-4">
             <span className="hidden sm:block">
               <button
@@ -43,11 +43,11 @@ export default function DetailWrapper({ title, children }: MainWrapperType) {
               </button>
             </span>
   </div> */}
-        </div>
-      </header>
-      <main>
-        <div className="p-4 sm:ml-64">{children}</div>
-      </main>
-    </>
-  )
+				</div>
+			</header>
+			<main>
+				<div className="p-4 sm:ml-64">{children}</div>
+			</main>
+		</>
+	);
 }

@@ -41,6 +41,7 @@ export interface ButtonProps
 const BackButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant, size, ...props }, ref) => {
     return (
+      // biome-ignore lint/a11y/useButtonType: <explanation>
       <button
         onClick={() => {
           window.history.back()

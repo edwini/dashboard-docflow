@@ -1,15 +1,15 @@
 "use client"
-import useSWR from "swr"
-import useSWRMutation from "swr/mutation"
+import { UserMessageType, UserType } from "@/app/(auth)/users/types/UserType"
+import LoadingBar from "@/components/ui/LoadingBar"
 import { Toaster } from "@/components/ui/Toaster"
 import { toast } from "@/hooks/useToast"
-import { UserMessageType, UserType } from "@/app/(auth)/users/types/UserType"
+import { getSession } from "next-auth/react"
 import { useRouter, useSearchParams } from "next/navigation"
+import useSWR from "swr"
+import useSWRMutation from "swr/mutation"
 import MainWrapper from "../../components/MainWrapper"
 import FormUsers from "../components/FormUsers"
 import { fetchOneUser, updateUser } from "../components/fetchUsers"
-import LoadingBar from "@/components/ui/LoadingBar"
-import { getSession } from "next-auth/react"
 
 export default function Page({
   params,
@@ -18,7 +18,7 @@ export default function Page({
 }) {
   const searchParams = useSearchParams()
   const router = useRouter()
-  const action = searchParams.get("action") as string
+  const action = searchParams?.get("action") as string
   const method = action === "edit" ? "PUT" : "POST"
   const { trigger } = useSWRMutation(`${method}:/api/users/`, updateUser)
 
@@ -40,7 +40,7 @@ export default function Page({
       user.createdBy = session?.user.content.username
       user.createdDate = new Date()
 
-      // rome-ignore lint/performance/noDelete: <explanation>
+      // biome-ignore lint/performance/noDelete: <explanation>
       delete user.id
     }
     const response = await trigger(user)

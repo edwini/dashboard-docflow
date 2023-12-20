@@ -1,6 +1,6 @@
 import { getToken } from "next-auth/jwt";
-import { NextRequest, NextResponse } from "next/server";
 import { withAuth } from "next-auth/middleware";
+import { NextRequest, NextResponse } from "next/server";
 import { BLOCKED_ROUTES } from "./utils/fomaters";
 /*
 export default withAuth(
@@ -35,7 +35,7 @@ export default withAuth(
     const pathname = req.nextUrl.pathname;
     const res = NextResponse.next();
 
-    // rome-ignore lint/suspicious/noExplicitAny: <explanation>
+    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
     const token: any = await getToken({ req });
 
     console.log("MIDD");
@@ -46,17 +46,17 @@ export default withAuth(
       console.log("NO AUTORIZADO");
       const url = new URL("/auth-denied", req.url);
       url.searchParams.set(
-      "error",
-      "No tiene permisos para accesar a este recurso.",
-    );
+        "error",
+        "No tiene permisos para accesar a este recurso.",
+      );
       return NextResponse.redirect(url);
     }
 
     return res;
   },
   {
-    callbacks: { 
-      // rome-ignore lint/suspicious/noExplicitAny: <explanation>
+    callbacks: {
+      // biome-ignore lint/suspicious/noExplicitAny: <explanation>
       authorized: ({ token }: any) => !token?.content.taxpayer,
 
     },
@@ -71,3 +71,27 @@ export const config = {
     "/operationlicense/:path*",
   ],
 };
+
+interface Authentication {
+  messages: {
+    successMessage: string;
+    errorMessage: string | null;
+    infoMessage: string | null;
+  };
+  content: {
+    createdBy: string;
+    updatedBy: string | null;
+    createdDate: string;
+    updatedDate: string;
+    id: number;
+    username: string;
+    name: string;
+    phone: string;
+    taxpayer: boolean;
+    status: string;
+    roleId: number;
+    rtn: string;
+    dni: string;
+  };
+  token: string;
+}

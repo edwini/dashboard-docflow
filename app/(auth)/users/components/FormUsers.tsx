@@ -1,12 +1,11 @@
 "use client"
-import { Input } from "@/components/ui/input"
-import { set, useForm } from "react-hook-form"
-import { z } from "zod"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { FormUserProps, UserType } from "../types/UserType"
 import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { zodResolver } from "@hookform/resolvers/zod"
 import { useRouter } from "next/navigation"
-import { ROLES } from "@/data/data"
+import { useForm } from "react-hook-form"
+import { z } from "zod"
+import { FormUserProps, UserType } from "../types/UserType"
 
 const schema = z.object({
   name: z.string().nonempty({ message: "El nombre es requerido" }),
@@ -159,6 +158,8 @@ const FormUsers = (props: FormUserProps) => {
                   <option value="2">CONTROL TRIBUTARIO</option>
                   <option value="3">PLANIFICACION</option>
                   <option value="4">CONTRIBUYENTE</option>
+                  <option value="5">JUSTICIA</option>
+                  <option value="6">GEMA</option>
                 </select>
                 <span className="text-sm text-red-500">
                   {errors?.roleId?.message as string}
@@ -169,11 +170,7 @@ const FormUsers = (props: FormUserProps) => {
         </div>
       </div>
       <div className="flex pt-4">
-        <Button
-          type="button"
-          variant={"link"}
-          onClick={() => router.push("/users/12/1")}
-        >
+        <Button type="button" onClick={() => router.push("/users/12/1")}>
           Regresar
         </Button>
         <span className="ml-3 hidden sm:block">

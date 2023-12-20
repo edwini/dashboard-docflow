@@ -3,6 +3,8 @@ export enum ROLES {
   CONTROL_TRIBUTARIO = 2,
   PLANIFICACION = 3,
   CONTRIBUYENTE = 4,
+  JUSTICIA = 5,
+  GEMA = 6,
 }
 export function getRoleName(roleValue: number): string {
   for (const roleName in ROLES) {

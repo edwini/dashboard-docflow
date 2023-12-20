@@ -1,9 +1,9 @@
-import MainWrapper from "../components/MainWrapper"
+import MainWrapper from "../components/MainWrapper";
 
 export default function Home() {
-  return (
-    <MainWrapper title="Dashboard">
-      <p>Dashboard</p>
-    </MainWrapper>
-  )
+	return (
+		<MainWrapper title="Dashboard">
+			<p>Dashboard</p>
+		</MainWrapper>
+	);
 }

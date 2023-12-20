@@ -1,7 +1,7 @@
 export type RejectionReasonType = {
-  content: RejectionReason[]
-}
+	content: RejectionReason[];
+};
 type RejectionReason = {
-  id: number
-  reason: string
-}
+	id: number;
+	reason: string;
+};

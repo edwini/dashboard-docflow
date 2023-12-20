@@ -1,12 +1,12 @@
 "use client"
 import { Icons } from "@/components/icons"
-import Image from "next/image"
-import logoMuni from "@/public/assets/images/logo_muni.png"
-import { useRef, useState } from "react"
-import { signIn } from "next-auth/react"
-import { useRouter } from "next/navigation"
-import Link from "next/link"
 import { Button } from "@/components/ui/button"
+import logoMuni from "@/public/assets/images/logo_muni.png"
+import { signIn } from "next-auth/react"
+import Image from "next/image"
+import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { useRef, useState } from "react"
 
 export default function Home() {
   const [error, setError] = useState("")
@@ -34,10 +34,9 @@ export default function Home() {
     console.log("LOGIN", login)
     if (!login?.ok) {
       setError("Usuario y contraseña incorrectos")
+      setLoading(false)
       return
     }
-
-    setLoading(false)
     router.push("/dashboard")
   }
 

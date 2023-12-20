@@ -1,12 +1,12 @@
-import { Icons } from "@/components/icons"
-import { FormatDate } from "@/utils/fomaters"
-import { BillBoards } from "../types/BillboardsType"
-import StatusBillboard from "./StatusBillboard"
+import { Icons } from "@/components/icons";
+import { FormatDate } from "@/utils/fomaters";
+import { BillBoards } from "../types/BillboardsType";
+import StatusBillboard from "./StatusBillboard";
 
 export function ListOfBillboard({
-  billboards,
+	billboards,
 }: { billboards: BillBoards[] | [] }) {
-  return (
+	return (
     <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
       <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
         <tr>
