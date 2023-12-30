@@ -93,3 +93,16 @@ export async function fetchOperationLicenseFiltering2(
 
 	return data.content;
 }
+
+type ApprovedMessage = { id: number; updatedBy: string };
+export async function approvedJusticeRole<ApprovedMessage>(
+	url: string,
+	{ arg }: { arg: ApprovedMessage },
+) {
+	const urlapi = url;
+	const response = await fetch(urlapi, {
+		method: "POST",
+		body: JSON.stringify(arg),
+	});
+	return response;
+}

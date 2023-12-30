@@ -6,7 +6,7 @@ import { useState } from "react";
 import useSWRMutation from "swr/mutation";
 import { BillBoardMessage } from "../types/BillboardsType";
 import DropDownBillboardAction from "./DropDownBillboardAction";
-import { updateBillboard } from "./fetchOperationLicense";
+import { updateBillboard } from "./actions";
 
 export default function StatusBillboard({
 	id,

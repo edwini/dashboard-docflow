@@ -31,7 +31,7 @@ import { StatusOperationLicense } from "../types/StatusOperationLicense";
 import {
 	fetchEconomicActivities,
 	updateStatusOperationLicense,
-} from "./fetchOperationLicense";
+} from "./actions";
 const schema = z.object({
 	totalBillboards: z
 		.number()

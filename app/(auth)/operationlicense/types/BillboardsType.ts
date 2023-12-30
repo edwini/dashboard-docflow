@@ -3,7 +3,7 @@ import { MessagesType } from "@/types/MessagesType";
 
 export type BillBoards = {
 	id: number;
-	licenseId: number;
+	operationLicenseId: number;
 	type: string;
 	location: string;
 	weight: number;

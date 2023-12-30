@@ -2,18 +2,10 @@
 
 import { Icons } from "@/components/icons";
 import { getStatusOperationName } from "@/utils/fomaters";
-import {
-	AutocompleteOptionsWithMetadata,
-	BaseItem,
-	createAutocomplete,
-} from "@algolia/autocomplete-core";
+import { createAutocomplete } from "@algolia/autocomplete-core";
 import Link from "next/link";
 import { useMemo, useRef, useState } from "react";
-import {
-	OperationLicensePagesType,
-	OperationLicenseType,
-} from "../types/OperationLicense";
-import { fetchOperationLicenseFiltering } from "./fetchOperationLicense";
+import { fetchOperationLicenseFiltering } from "./actions";
 export default function AutoComplete(props) {
 	const [autocompleteState, setAutocompleteState] = useState({
 		collections: [],
@@ -23,6 +15,7 @@ export default function AutoComplete(props) {
 		console.log(data);
 	};
 
+	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	const autocomplete = useMemo(
 		() =>
 			createAutocomplete({

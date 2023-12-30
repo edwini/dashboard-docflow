@@ -1,16 +1,16 @@
 import { Icons } from "@/components/icons";
 import { BackButton } from "@/components/ui/BackButton";
-import { Button } from "@/components/ui/button";
-import { ROLES, STATUS_BILLBOARD } from "@/data/data";
+import { APPOVED_TYPES, ROLES, STATUS_BILLBOARD } from "@/data/data";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { FormatDate, tiempoTranscurrido } from "@/utils/fomaters";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
 import MainWrapper from "../../components/MainWrapper";
+import ButtonApprove from "../components/ButtonAprove";
 import RejectOperation from "../components/DialogReject";
 import SendtoSimafi from "../components/DialogSendtoSimafi";
-import { fetchOperationLicenseId } from "../components/fetchOperationLicense";
 import { ListOfBillboard } from "../components/ListOfBillboard";
+import { fetchOperationLicenseId } from "../components/actions";
 
 export default async function Page({
 	params,
@@ -28,24 +28,16 @@ export default async function Page({
 			)) === undefined
 			? false
 			: true;
+	const leasingContractAppoved = operationLicense?.approvements.findLast(
+		(approved) => approved.approvedType === APPOVED_TYPES.LEASING_CONTRACT,
+	);
+	const alcoholApproved = operationLicense?.approvements.findLast(
+		(approved) => approved.approvedType === APPOVED_TYPES.ALCOHOL,
+	);
 
-	return (
-		<MainWrapper title="Detalle de licencia">
-			<div className="flex pb-4">
-				<BackButton>
-					<Icons.chevronLeft />
-					Regresar
-				</BackButton>
-				{session?.user.content.roleId === ROLES.ADMINISTRADOR ? (
-					<>
-						<SendtoSimafi enabled={permite} operationId={params.operationid} />
-						<RejectOperation operationId={params.operationid} />
-					</>
-				) : (
-					<></>
-				)}
-			</div>
-			<div className="overflow-hidden bg-white shadow sm:rounded-lg">
+	const GeneralInformationSection = () => {
+		return (
+			<div className="overflow-hidden bg-white shadow sm:rounded-lg mb-4">
 				<div className="px-4 py-5 sm:px-6">
 					<h3 className="text-base font-semibold leading-6 text-gray-900">
 						Información General
@@ -57,7 +49,7 @@ export default async function Page({
 				</div>
 				<div className="border-t border-gray-200">
 					<dl>
-						<div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+						<div className="bg-gray-50  px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
 							<dt className="text-sm font-medium text-gray-500">RTM</dt>
 							<dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
 								{operationLicense?.rtm}
@@ -69,7 +61,7 @@ export default async function Page({
 								{operationLicense?.expedient}
 							</dd>
 						</div>
-						<div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+						<div className="bg-gray-50  px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
 							<dt className="text-sm font-medium text-gray-500">
 								Clave catastral
 							</dt>
@@ -115,7 +107,7 @@ export default async function Page({
 								{operationLicense?.legalRepresentative}
 							</dd>
 						</div>
-						<div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+						<div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
 							<dt className="text-sm font-medium text-gray-500">
 								Dirección de negocio
 							</dt>
@@ -131,7 +123,7 @@ export default async function Page({
 								{operationLicense?.email}
 							</dd>
 						</div>
-						<div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+						<div className="bg-gray-50  px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
 							<dt className="text-sm font-medium text-gray-500">Pagína web</dt>
 							<dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
 								<a href="www.google.com">{operationLicense?.email}</a>
@@ -147,6 +139,13 @@ export default async function Page({
 						</div>
 					</dl>
 				</div>
+			</div>
+		);
+	};
+
+	const StatementSalesSection = () => {
+		return (
+			<div className="overflow-hidden bg-white shadow sm:rounded-lg mb-4">
 				<div className="px-4 py-5 sm:px-6">
 					<h3 className="text-base font-semibold leading-6 text-gray-900">
 						Declaración jurada de ingresos
@@ -186,7 +185,7 @@ export default async function Page({
 								{operationLicense?.controlledProduct}
 							</dd>
 						</div>
-						<div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+						<div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
 							<dt className="text-sm font-medium text-gray-500">
 								Unidades billares, Maquin y otros
 							</dt>
@@ -204,62 +203,93 @@ export default async function Page({
 						</div>
 					</dl>
 				</div>
-				{session?.user.content.roleId === ROLES.ADMINISTRADOR ||
-				session?.user.content.roleId === ROLES.JUSTICIA ? (
-					<>
-						<div className="px-4 py-5 sm:px-6">
-							<h3 className="text-base font-semibold leading-6 text-gray-900">
-								Departamento de Justicia
-							</h3>
-							<p className="mt-1 max-w-2xl text-sm text-gray-500">
-								Debe aprobar el contrato de arrendamiento y la venta de alcohol
-								si el contribuyente lo registra.
-							</p>
-						</div>
-						<div className="border-t border-gray-200">
-							<dl>
-								<div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-									<dt className="text-sm font-medium text-gray-500">
-										{operationLicense?.document.leasingContractBase64 ? (
-											<Link
-												href={operationLicense?.document.leasingContractBase64}
-												target={"_blank"}
-												download="Solvencia municipal"
-												className="text-blue-500 hover:underline"
-											>
-												✅ Ver Contrato de arrendamiento
-											</Link>
-										) : (
-											"❌ Contrato de arrendamiento"
-										)}
-									</dt>
-									<dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-										<Button className="inline-flex items-center rounded-md border  border-gray-300 bg-amber-600 px-4 py-2 text-sm font-medium text-white shadow-sm  hover:bg-amber-700  focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2">
-											Aprobar
-										</Button>
-									</dd>
-								</div>
-								<div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-									<dt className="text-sm font-medium text-gray-500">
-										Permiso para venta de bebidas alcoholicas
-									</dt>
-									<dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-										{operationLicense?.saleAlcohol ? (
-											<Button className="inline-flex items-center rounded-md border border-gray-300 bg-amber-600 px-4 py-2 text-sm font-medium text-white shadow-sm  hover:bg-amber-700  focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2">
-												Aprobar
-											</Button>
-										) : (
-											"No requiere aprobación"
-										)}
-									</dd>
-								</div>
-							</dl>
-						</div>
-					</>
-				) : (
-					<></>
-				)}
+			</div>
+		);
+	};
 
+	const JusticeSection = () => {
+		if (
+			session?.user.content.roleId === ROLES.ADMINISTRADOR ||
+			session?.user.content.roleId === ROLES.JUSTICIA
+		) {
+			return (
+				<div className="overflow-hidden bg-white shadow sm:rounded-lg mb-4">
+					<div className="px-4 py-5 sm:px-6">
+						<h3 className="text-base font-semibold leading-6 text-gray-900">
+							Departamento de Justicia
+						</h3>
+						<p className="mt-1 max-w-2xl text-sm text-gray-500">
+							Aprobaciones del contrato de arrendamiento y la venta de alcohol
+							si el contribuyente indica que lo vende.
+						</p>
+					</div>
+					<div className="border-t border-gray-200">
+						<dl>
+							<div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+								<dt className="text-sm font-medium text-gray-500">
+									{operationLicense?.document.leasingContractBase64 ? (
+										<Link
+											href={operationLicense?.document.leasingContractBase64}
+											target={"_blank"}
+											download="Solvencia municipal"
+											className="text-blue-500 hover:underline"
+										>
+											✅ Ver Contrato de arrendamiento
+										</Link>
+									) : (
+										"❌ Contrato de arrendamiento"
+									)}
+								</dt>
+								<dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+									{leasingContractAppoved ? (
+										<strong>
+											Aprobado {FormatDate(leasingContractAppoved.approvedDate)}{" "}
+											por {leasingContractAppoved.approvedBy}
+										</strong>
+									) : (
+										<ButtonApprove
+											operationId={params.operationid}
+											type={APPOVED_TYPES.LEASING_CONTRACT}
+											updatedBy={session.user.content.username}
+										>
+											Aprobar Contrato
+										</ButtonApprove>
+									)}
+								</dd>
+							</div>
+							<div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+								<dt className="text-sm font-medium text-gray-500">
+									Permiso para venta de bebidas alcohólicas
+								</dt>
+								<dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+									{alcoholApproved ? (
+										<strong>
+											Aprobado {FormatDate(alcoholApproved.approvedDate)} por{" "}
+											{alcoholApproved.approvedBy}
+										</strong>
+									) : operationLicense?.saleAlcohol ? (
+										<ButtonApprove
+											operationId={params.operationid}
+											type={APPOVED_TYPES.ALCOHOL}
+											updatedBy={session.user.content.username}
+										>
+											Aprobar licencia de alcohol
+										</ButtonApprove>
+									) : (
+										"No requiere aprobación"
+									)}
+								</dd>
+							</div>
+						</dl>
+					</div>
+				</div>
+			);
+		}
+	};
+
+	const BillboardSection = () => {
+		return (
+			<div className="overflow-hidden bg-white shadow sm:rounded-lg mb-4">
 				<div className="px-4 py-5 sm:px-6">
 					<h3 className="text-base font-semibold leading-6 text-gray-900">
 						Declaración de rotulos y vallas
@@ -274,6 +304,13 @@ export default async function Page({
 				<div className="border-t border-gray-200 overflow-x-scroll ">
 					<ListOfBillboard billboards={operationLicense?.billboards || []} />
 				</div>
+			</div>
+		);
+	};
+
+	const AttachSection = () => {
+		return (
+			<div className="overflow-hidden bg-white shadow sm:rounded-lg mb-4">
 				<div className="px-4 py-5 sm:px-6">
 					<h3 className="text-base font-semibold leading-6 text-gray-900">
 						Frima de declaración y documentos adjuntos
@@ -503,7 +540,12 @@ export default async function Page({
 					</h3>
 				</div>
 			</div>
-			<div className="flex pt-4 pb-4">
+		);
+	};
+
+	const BackButtonSection = () => {
+		return (
+			<div className="flex pb-4">
 				<BackButton>
 					<Icons.chevronLeft />
 					Regresar
@@ -517,8 +559,12 @@ export default async function Page({
 					<></>
 				)}
 			</div>
+		);
+	};
 
-			<div className="overflow-hidden bg-white shadow sm:rounded-lg">
+	const AuditSection = () => {
+		return (
+			<div className="overflow-hidden bg-white shadow sm:rounded-lg mb-4">
 				<div className="px-4 py-5 sm:px-6">
 					<h3 className="text-base font-semibold leading-6 text-gray-900">
 						Información de auditoria
@@ -560,6 +606,26 @@ export default async function Page({
 					</table>
 				</div>
 			</div>
+		);
+	};
+
+	return (
+		<MainWrapper title="Detalle de licencia">
+			{BackButtonSection()}
+
+			{GeneralInformationSection()}
+
+			{StatementSalesSection()}
+
+			{JusticeSection()}
+
+			{BillboardSection()}
+
+			{AttachSection()}
+
+			{BackButtonSection()}
+
+			{AuditSection()}
 		</MainWrapper>
 	);
 }

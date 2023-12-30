@@ -1,4 +1,5 @@
 import { STATUS_OPERATION_LICENSE } from "@/data/data";
+import { Appovement } from "./ApprovementType";
 import { BillBoards } from "./BillboardsType";
 
 export type OperationLicensePagesType = {
@@ -57,7 +58,11 @@ export type OperationLicenseType = {
 	status: STATUS_OPERATION_LICENSE;
 	licenseYear: number;
 	billboards: BillBoards[];
+	approvements: Appovement[];
 	document: Document;
 	rejectionReason: string;
 	saleAlcohol: boolean;
+	saleAlcoholApprovedBy: string | null
+	saleAlcoholApprovedDate: string | null
+
 };

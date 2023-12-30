@@ -12,7 +12,8 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
-  // rome-ignore lint/suspicious/noExplicitAny: <explanation>
+
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   const token: any = await getToken({
     req: req,
     secret: authOptions.secret,

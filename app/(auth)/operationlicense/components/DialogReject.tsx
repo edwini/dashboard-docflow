@@ -15,10 +15,7 @@ import useSWR from "swr";
 import useSWRMutation from "swr/mutation";
 import { RejectionReasonType } from "../types/RejectionReasonType";
 import { StatusOperationLicense } from "../types/StatusOperationLicense";
-import {
-	fetchRejectionReasons,
-	updateStatusOperationLicense,
-} from "./fetchOperationLicense";
+import { fetchRejectionReasons, updateStatusOperationLicense } from "./actions";
 
 import { Toaster } from "@/components/ui/Toaster";
 import { toast } from "@/hooks/useToast";

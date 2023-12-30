@@ -1,4 +1,3 @@
-import { Icons } from "@/components/icons";
 import { FormatDate } from "@/utils/fomaters";
 import { BillBoards } from "../types/BillboardsType";
 import StatusBillboard from "./StatusBillboard";
@@ -55,7 +54,7 @@ export function ListOfBillboard({
               updatedBy,
               updatedDate,
               diameter,
-              poleLocation,
+              poleLocation              
             }: BillBoards,
             index,
           ) => {
