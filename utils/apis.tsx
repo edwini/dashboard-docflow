@@ -42,7 +42,13 @@ export const URL_REJECTION_REASON = () => {
 export const URL_APPROVE_LEASING_CONTRACT = () => {
 	return `${process.env.DASHBOARD_API}/operation-licenses/justice-role/leasing-contract/approve`;
 };
+export const URL_UPLOAD_SOIL_CONSTANCY = () => {
+	return `${process.env.DASHBOARD_API}/operation-licenses/document/soil-constancy`;
+};
 
+export const URL_UPLOAD_VIABILITY_CONSTANCY = () => {
+	return `${process.env.DASHBOARD_API}/operation-licenses/document/viability-constancy`;
+};
 export const URL_APPROVE_ALCOHOL = () => {
 	return `${process.env.DASHBOARD_API}/operation-licenses/justice-role/alcohol/approve`;
 };

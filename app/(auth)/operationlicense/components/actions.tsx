@@ -94,14 +94,33 @@ export async function fetchOperationLicenseFiltering2(
 	return data.content;
 }
 
-type ApprovedMessage = { id: number; updatedBy: string };
-export async function approvedJusticeRole<ApprovedMessage>(
+type ApprovedPayload = { id: number; updatedBy: string };
+export async function approvedJusticeRole<ApprovedPayload>(
 	url: string,
-	{ arg }: { arg: ApprovedMessage },
+	{ arg }: { arg: ApprovedPayload },
 ) {
 	const urlapi = url;
 	const response = await fetch(urlapi, {
 		method: "POST",
+		body: JSON.stringify(arg),
+	});
+	return response;
+}
+
+type UploadFilePayLoad = {
+	id: number;
+	updatedBy: string;
+	document: {
+		soilConstancy?: string;
+	};
+};
+export async function putSoilConstancy<UploadFilePayLoad>(
+	url: string,
+	{ arg }: { arg: UploadFilePayLoad },
+) {
+	const urlapi = url;
+	const response = await fetch(urlapi, {
+		method: "PUT",
 		body: JSON.stringify(arg),
 	});
 	return response;

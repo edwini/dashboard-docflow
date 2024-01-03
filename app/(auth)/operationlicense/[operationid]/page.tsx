@@ -10,6 +10,9 @@ import ButtonApprove from "../components/ButtonAprove";
 import RejectOperation from "../components/DialogReject";
 import SendtoSimafi from "../components/DialogSendtoSimafi";
 import { ListOfBillboard } from "../components/ListOfBillboard";
+
+import UploadSoilConstancy from "../components/UploadSoilContancy";
+import UploadViabilityConstancy from "../components/UploadViabilityConstancy";
 import { fetchOperationLicenseId } from "../components/actions";
 
 export default async function Page({
@@ -152,56 +155,54 @@ export default async function Page({
 					</h3>
 				</div>
 				<div className="border-t border-gray-200">
-					<dl>
-						<div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-							<dt className="text-sm font-medium text-gray-500">
-								Volumen de producción
-							</dt>
-							<dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-								{operationLicense?.production}
-							</dd>
-						</div>
-						<div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-							<dt className="text-sm font-medium text-gray-500">
-								Volumen por servicios
-							</dt>
-							<dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-								{operationLicense?.services}
-							</dd>
-						</div>
-						<div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-							<dt className="text-sm font-medium text-gray-500">
-								Volumen por ventas
-							</dt>
-							<dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-								{operationLicense?.sells}
-							</dd>
-						</div>
-						<div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-							<dt className="text-sm font-medium text-gray-500">
-								Producto Controlado
-							</dt>
-							<dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-								{operationLicense?.controlledProduct}
-							</dd>
-						</div>
-						<div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-							<dt className="text-sm font-medium text-gray-500">
-								Unidades billares, Maquin y otros
-							</dt>
-							<dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-								{operationLicense?.units}
-							</dd>
-						</div>
-						<div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-							<dt className="text-sm font-medium text-gray-500">
-								Otros ingresos
-							</dt>
-							<dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-								{operationLicense?.otherFunds}
-							</dd>
-						</div>
-					</dl>
+					<div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+						<dt className="text-sm font-medium text-gray-500">
+							Volumen de producción
+						</dt>
+						<dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+							{operationLicense?.production}
+						</dd>
+					</div>
+					<div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+						<dt className="text-sm font-medium text-gray-500">
+							Volumen por servicios
+						</dt>
+						<dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+							{operationLicense?.services}
+						</dd>
+					</div>
+					<div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+						<dt className="text-sm font-medium text-gray-500">
+							Volumen por ventas
+						</dt>
+						<dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+							{operationLicense?.sells}
+						</dd>
+					</div>
+					<div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+						<dt className="text-sm font-medium text-gray-500">
+							Producto Controlado
+						</dt>
+						<dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+							{operationLicense?.controlledProduct}
+						</dd>
+					</div>
+					<div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+						<dt className="text-sm font-medium text-gray-500">
+							Unidades billares, Maquin y otros
+						</dt>
+						<dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+							{operationLicense?.units}
+						</dd>
+					</div>
+					<div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+						<dt className="text-sm font-medium text-gray-500">
+							Otros ingresos
+						</dt>
+						<dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+							{operationLicense?.otherFunds}
+						</dd>
+					</div>
 				</div>
 			</div>
 		);
@@ -286,20 +287,57 @@ export default async function Page({
 			);
 		}
 	};
-
+	const GemaSection = () => {
+		return (
+			<div className="overflow-hidden bg-white shadow sm:rounded-lg mb-4">
+				<div className="flex justify-between items-center">
+					<div className="px-4 py-5 sm:px-6">
+						<h3 className="text-base font-semibold leading-6 text-gray-900">
+							Gerencia de Medio Ambiente
+						</h3>
+						<p className="mt-1 max-w-2xl text-sm text-gray-500">
+							Debe adjuntar la constancia de viabilidad
+						</p>
+					</div>
+					<div className="px-4 py-5 sm:px-6">
+						{operationLicense && (
+							<UploadViabilityConstancy
+								operationId={operationLicense.id}
+								updatedBy={
+									operationLicense.updatedDate ?? operationLicense.createdDate
+								}
+							/>
+						)}
+					</div>
+				</div>
+			</div>
+		);
+	};
 	const BillboardSection = () => {
 		return (
 			<div className="overflow-hidden bg-white shadow sm:rounded-lg mb-4">
-				<div className="px-4 py-5 sm:px-6">
-					<h3 className="text-base font-semibold leading-6 text-gray-900">
-						Declaración de rotulos y vallas
-					</h3>
-					<p className="mt-1 max-w-2xl text-sm text-gray-500">
-						Total de rotulos declarados{" "}
-						<span className="text-lg">
-							{operationLicense?.billboards?.length || 0}
-						</span>
-					</p>
+				<div className="flex justify-between items-center">
+					<div className="px-4 py-5 sm:px-6">
+						<h3 className="text-base font-semibold leading-6 text-gray-900">
+							Declaración de rotulos y vallas
+						</h3>
+						<p className="mt-1 max-w-2xl text-sm text-gray-500">
+							Total de rotulos declarados{" "}
+							<span className="text-lg">
+								{operationLicense?.billboards?.length || 0}
+							</span>
+						</p>
+					</div>
+					<div className="px-4 py-5 sm:px-6">
+						{operationLicense && (
+							<UploadSoilConstancy
+								operationId={operationLicense.id}
+								updatedBy={
+									operationLicense.updatedDate ?? operationLicense.createdDate
+								}
+							/>
+						)}
+					</div>
 				</div>
 				<div className="border-t border-gray-200 overflow-x-scroll ">
 					<ListOfBillboard billboards={operationLicense?.billboards || []} />
@@ -313,7 +351,7 @@ export default async function Page({
 			<div className="overflow-hidden bg-white shadow sm:rounded-lg mb-4">
 				<div className="px-4 py-5 sm:px-6">
 					<h3 className="text-base font-semibold leading-6 text-gray-900">
-						Frima de declaración y documentos adjuntos
+						Firma de declaración y documentos adjuntos
 					</h3>
 				</div>
 				<div className="border-t border-gray-200">
@@ -618,6 +656,8 @@ export default async function Page({
 			{StatementSalesSection()}
 
 			{JusticeSection()}
+
+			{GemaSection()}
 
 			{BillboardSection()}
 
