@@ -31,10 +31,10 @@ export default async function Page({
 			)) === undefined
 			? false
 			: true;
-	const leasingContractAppoved = operationLicense?.approvements.findLast(
+	const leasingContractAppoved = operationLicense?.approvements.find(
 		(approved) => approved.approvedType === APPOVED_TYPES.LEASING_CONTRACT,
 	);
-	const alcoholApproved = operationLicense?.approvements.findLast(
+	const alcoholApproved = operationLicense?.approvements.find(
 		(approved) => approved.approvedType === APPOVED_TYPES.ALCOHOL,
 	);
 
