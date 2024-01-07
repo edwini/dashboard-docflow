@@ -300,14 +300,16 @@ export default async function Page({
 						</p>
 					</div>
 					<div className="px-4 py-5 sm:px-6">
-						{operationLicense && (
-							<UploadViabilityConstancy
-								operationId={operationLicense.id}
-								updatedBy={
-									operationLicense.updatedDate ?? operationLicense.createdDate
-								}
-							/>
-						)}
+						{operationLicense &&
+							(session?.user.content.roleId === ROLES.GEMA ||
+								session?.user.content.roleId === ROLES.ADMINISTRADOR) && (
+								<UploadViabilityConstancy
+									operationId={operationLicense.id}
+									updatedBy={
+										operationLicense.updatedDate ?? operationLicense.createdDate
+									}
+								/>
+							)}
 					</div>
 				</div>
 			</div>
@@ -329,14 +331,16 @@ export default async function Page({
 						</p>
 					</div>
 					<div className="px-4 py-5 sm:px-6">
-						{operationLicense && (
-							<UploadSoilConstancy
-								operationId={operationLicense.id}
-								updatedBy={
-									operationLicense.updatedDate ?? operationLicense.createdDate
-								}
-							/>
-						)}
+						{operationLicense &&
+							(session?.user.content.roleId === ROLES.PLANIFICACION ||
+								session?.user.content.roleId === ROLES.ADMINISTRADOR) && (
+								<UploadSoilConstancy
+									operationId={operationLicense.id}
+									updatedBy={
+										operationLicense.updatedDate ?? operationLicense.createdDate
+									}
+								/>
+							)}
 					</div>
 				</div>
 				<div className="border-t border-gray-200 overflow-x-scroll ">
